@@ -44,14 +44,14 @@ export default function Navbar() {
                 onClick={() => navigate("/")}
                 className="h-9 w-9 cursor-pointer"
                 src="/okkhor-white.png"
-                alt=""
+                alt="Okkhor Logo"
               />
             ) : (
               <img
                 onClick={() => navigate("/")}
                 className="h-9 w-9 cursor-pointer"
                 src="/okkhor.png"
-                alt=""
+                alt="Okkhor Logo"
               />
             )}
 
@@ -146,6 +146,7 @@ export default function Navbar() {
             <button
               onClick={() => setOpen(true)}
               className="text-3xl sm:hidden"
+              aria-label="Open Menu"
             >
               <IoMenuOutline />
             </button>
@@ -158,6 +159,7 @@ export default function Navbar() {
               <button
                 onClick={() => setOpen(false)}
                 className="absolute right-6 top-6 text-3xl"
+                aria-label="Close Menu"
               >
                 <IoCloseOutline />
               </button>

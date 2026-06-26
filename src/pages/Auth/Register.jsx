@@ -167,15 +167,23 @@ export default function Register() {
                   required
                 />
                 {showPassword ? (
-                  <FaRegEyeSlash
+                  <button
+                    type="button"
                     className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
                     onClick={toggleShowPassword}
-                  />
+                    aria-label="Toggle password visibility"
+                  >
+                    <FaRegEyeSlash />
+                  </button>
                 ) : (
-                  <FaRegEye
+                  <button
+                    type="button"
                     className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
                     onClick={toggleShowPassword}
-                  />
+                    aria-label="Toggle password visibility"
+                  >
+                    <FaRegEye />
+                  </button>
                 )}
               </div>
             </div>
