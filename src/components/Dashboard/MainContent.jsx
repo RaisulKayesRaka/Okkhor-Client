@@ -1,61 +1,28 @@
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet-async";
-import { GoSidebarExpand } from "react-icons/go";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useTheme } from "../../providers/ThemeProvider";
+import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
+import { Outlet } from "react-router-dom";
 import ThemeToggle from "../ThemeToggle";
 
 export default function MainContent({ toggleSidebar, isSidebarVisible }) {
-  const navigate = useNavigate();
-  const { theme } = useTheme();
   return (
     <>
       <Helmet>
         <title>Dashboard | Okkhor</title>
       </Helmet>
       <main className="w-full flex-1 bg-white dark:bg-black">
-        <div className="sticky top-0 z-40 flex h-16 w-full items-center gap-4 border-b bg-white p-4 dark:border-gray-700 dark:bg-black">
-          {!isSidebarVisible && (
-            <>
-              <button
-                onClick={toggleSidebar}
-                aria-label="Open Sidebar"
-                className="block rounded bg-gray-100 p-1 text-xl hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
-              >
-                <GoSidebarExpand />
-              </button>
-            </>
-          )}
-          <section className="flex items-center justify-between w-full">
-            <div className="flex items-center justify-center gap-2">
-              {theme === "dark" ||
-                (theme === "system" &&
-                  window.matchMedia("(prefers-color-scheme: dark)").matches) ? (
-                <img
-                  onClick={() => navigate("/")}
-                  className="h-8 w-8 cursor-pointer"
-                  src="/okkhor-white.png"
-                  alt=""
-                />
-              ) : (
-                <img
-                  onClick={() => navigate("/")}
-                  className="h-8 w-8 cursor-pointer"
-                  src="/okkhor.png"
-                  alt=""
-                />
-              )}
-              <h3
-                onClick={() => navigate("/")}
-                className="cursor-pointer text-2xl font-semibold"
-              >
-                Okkhor
-              </h3>
-            </div>
-            <div>
-              <ThemeToggle />
-            </div>
-          </section>
+        <div className="sticky top-0 z-40 flex h-16 w-full items-center justify-between border-b border-gray-100 bg-white p-4 dark:border-gray-800 dark:bg-black">
+          <button
+            onClick={toggleSidebar}
+            aria-label="Toggle Sidebar"
+            className="block rounded-lg bg-gray-50 p-1.5 text-xl text-gray-500 transition-colors hover:bg-gray-200 hover:text-black dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+          >
+            {isSidebarVisible ? <GoSidebarCollapse /> : <GoSidebarExpand />}
+          </button>
+
+          <div>
+            <ThemeToggle />
+          </div>
         </div>
 
         <div className="p-4">

@@ -37,7 +37,11 @@ export default function ThemeProvider({ children }) {
   }, [theme]);
 
   const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
+    let currentResolvedTheme = theme;
+    if (theme === "system") {
+      currentResolvedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    const newTheme = currentResolvedTheme === "dark" ? "light" : "dark";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
   };
