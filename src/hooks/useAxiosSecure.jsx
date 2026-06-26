@@ -1,6 +1,7 @@
 import axios from "axios";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const axiosSecure = axios.create({
   baseURL: "https://okkhor-server.vercel.app",
@@ -30,6 +31,8 @@ export default function useAxiosSecure() {
       if (status === 401 || status === 403) {
         await logOut();
         navigate("/login");
+      } else if (status >= 500) {
+        toast.error(error.response?.data?.message || "Server error. Please try again later.");
       }
       return Promise.reject(error);
     },

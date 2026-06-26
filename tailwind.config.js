@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        raleway: ["Raleway", "serif"],
+        raleway: ["Raleway", "sans-serif"],
       },
     },
   },
