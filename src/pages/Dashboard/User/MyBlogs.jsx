@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
+import DashboardPageHeader from "../../../components/Dashboard/DashboardPageHeader";
+import DashboardCard from "../../../components/Dashboard/DashboardCard";
 
 export default function MyBlogs() {
   const axiosSecure = useAxiosSecure();
@@ -57,15 +59,11 @@ export default function MyBlogs() {
       <Helmet>
         <title>My Blogs | Okkhor</title>
       </Helmet>
-      <section className="container mx-auto max-w-6xl px-4 py-10">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            My Blogs
-          </h1>
-          <p className="mt-2 text-gray-500 dark:text-gray-400">
-            Manage your blog posts and track their status.
-          </p>
-        </div>
+      <section className="w-full">
+        <DashboardPageHeader 
+          title="My Blogs" 
+          subtitle="Manage your blog posts and track their status." 
+        />
 
         {blogs.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-gray-50 py-20 dark:border-gray-700 dark:bg-gray-800/50">
@@ -83,7 +81,7 @@ export default function MyBlogs() {
             </Link>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-2xl border border-gray-100 shadow-sm dark:border-gray-800">
+          <DashboardCard>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm text-gray-600 dark:text-gray-400">
                 <thead className="bg-gray-50 text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900/50 dark:text-gray-400">
@@ -91,6 +89,7 @@ export default function MyBlogs() {
                     <th className="px-6 py-4 font-semibold">Blog Name</th>
                     <th className="px-6 py-4 font-semibold">Upvotes</th>
                     <th className="px-6 py-4 font-semibold">Downvotes</th>
+                    <th className="px-6 py-4 font-semibold">Views</th>
                     <th className="px-6 py-4 font-semibold">Status</th>
                     <th className="px-6 py-4 font-semibold text-right">
                       Action
@@ -116,6 +115,9 @@ export default function MyBlogs() {
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         {blog?.downvotes}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        {blog?.views || 0}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         <span
@@ -154,7 +156,7 @@ export default function MyBlogs() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </DashboardCard>
         )}
       </section>
     </>

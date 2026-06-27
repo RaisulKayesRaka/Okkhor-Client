@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
+import DashboardPageHeader from "../../../components/Dashboard/DashboardPageHeader";
+import DashboardCard from "../../../components/Dashboard/DashboardCard";
 
 export default function ReportedContents() {
   const axiosSecure = useAxiosSecure();
@@ -68,15 +70,11 @@ export default function ReportedContents() {
       <Helmet>
         <title>Reported Blogs | Okkhor</title>
       </Helmet>
-      <section className="container mx-auto max-w-6xl px-4 py-10">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Reported Blogs
-          </h1>
-          <p className="mt-2 text-gray-500 dark:text-gray-400">
-            Review and take action on reported content.
-          </p>
-        </div>
+      <section className="w-full">
+        <DashboardPageHeader 
+          title="Reported Blogs" 
+          subtitle="Review and take action on reported content." 
+        />
 
         {blogs.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-gray-50 py-20 dark:border-gray-700 dark:bg-gray-800/50">
@@ -88,7 +86,7 @@ export default function ReportedContents() {
             </p>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-2xl border border-gray-100 shadow-sm dark:border-gray-800">
+          <DashboardCard>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm text-gray-600 dark:text-gray-400">
                 <thead className="bg-gray-50 text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900/50 dark:text-gray-400">
@@ -136,7 +134,7 @@ export default function ReportedContents() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </DashboardCard>
         )}
       </section>
     </>

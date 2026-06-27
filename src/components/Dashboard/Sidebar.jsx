@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import useAuth from "../../hooks/useAuth";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaUser, FaUsersCog } from "react-icons/fa";
+import { FaUser, FaUsersCog, FaBookmark } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
 import { MdLibraryAddCheck, MdRateReview, MdHistory } from "react-icons/md";
 import { AiFillProduct } from "react-icons/ai";
@@ -54,11 +54,11 @@ export default function Sidebar({ toggleSidebar }) {
             <div className="mb-2 px-4 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
               Menu
             </div>
+            <NavLink to="my-profile" onClick={handleLinkClick} className={navLinkClasses}>
+              <FaUser className="text-lg" /> <span>My Profile</span>
+            </NavLink>
             {role === "user" && (
               <>
-                <NavLink to="my-profile" onClick={handleLinkClick} className={navLinkClasses}>
-                  <FaUser className="text-lg" /> <span>My Profile</span>
-                </NavLink>
                 <NavLink to="analytics" onClick={handleLinkClick} className={navLinkClasses}>
                   <IoStatsChart className="text-lg" /> <span>Analytics</span>
                 </NavLink>
@@ -67,6 +67,9 @@ export default function Sidebar({ toggleSidebar }) {
                 </NavLink>
                 <NavLink to="my-blogs" onClick={handleLinkClick} className={navLinkClasses}>
                   <AiFillProduct className="text-lg" /> <span>My Blogs</span>
+                </NavLink>
+                <NavLink to="saved-blogs" onClick={handleLinkClick} className={navLinkClasses}>
+                  <FaBookmark className="text-lg" /> <span>Saved Blogs</span>
                 </NavLink>
               </>
             )}

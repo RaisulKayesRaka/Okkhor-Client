@@ -9,7 +9,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useTheme } from "../../providers/ThemeProvider";
 
 export default function Login() {
-  const { setUser, userLogin, googleLogIn } = useAuth();
+  const { setUser, userLogin, googleLogIn, resetPassword } = useAuth();
   const axiosPublic = useAxiosPublic();
   const { theme } = useTheme();
   const [error, setError] = useState(null);
@@ -113,12 +113,21 @@ export default function Login() {
               />
             </div>
             <div>
-              <label
-                htmlFor="password"
-                className="mb-1.5 block text-sm font-semibold text-gray-900 dark:text-white"
-              >
-                Password
-              </label>
+              <div className="mb-1.5 flex items-center justify-between">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-semibold text-gray-900 dark:text-white"
+                >
+                  Password
+                </label>
+                <Link
+                  to="/forgot-password"
+                  state={{ email: emailRef.current?.value }}
+                  className="text-xs font-semibold text-black underline underline-offset-2 transition hover:text-gray-600 dark:text-white dark:hover:text-gray-300"
+                >
+                  Forgot password?
+                </Link>
+              </div>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}

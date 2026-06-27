@@ -1,15 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BsCaretDown,
   BsCaretDownFill,
   BsCaretUp,
   BsCaretUpFill,
+  BsBookmark,
+  BsBookmarkFill,
+  BsEye,
+  BsShare,
 } from "react-icons/bs";
 import { FaPen } from "react-icons/fa";
 import { GoReport } from "react-icons/go";
 import { IoClose } from "react-icons/io5";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
@@ -18,9 +22,20 @@ import { Helmet } from "react-helmet-async";
 
 export default function BlogDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [editingReview, setEditingReview] = useState(null);
+
+  useEffect(() => {
+    if (id && !sessionStorage.getItem(`viewed_${id}`)) {
+      sessionStorage.setItem(`viewed_${id}`, "true");
+      axiosSecure.patch(`/blogs/view/${id}`).catch(err => {
+        sessionStorage.removeItem(`viewed_${id}`);
+        console.error(err);
+      });
+    }
+  }, [id, axiosSecure]);
 
   const {
     data: blog = {},
@@ -55,6 +70,18 @@ export default function BlogDetails() {
         `/blogs/is-downvoted/${blog?._id}?email=${user?.email}`
       );
       return data;
+    },
+  });
+
+  const { data: isSaved = false, refetch: refetchIsSaved } = useQuery({
+    enabled: !loading && !!blog?._id,
+    queryKey: ["isSaved", blog?._id, user?.email],
+    queryFn: async () => {
+      if (!user?.email) return false;
+      const { data } = await axiosSecure.get(
+        `/saved-blogs/check/${blog?._id}?email=${user?.email}`
+      );
+      return data?.isSaved;
     },
   });
 
@@ -141,6 +168,10 @@ export default function BlogDetails() {
   };
 
   const openAddModal = () => {
+    if (!user) {
+      toast.error("Please login to write a review");
+      return navigate("/login");
+    }
     setEditingReview(null);
     const textarea = document.getElementById("review");
     if (textarea) textarea.value = "";
@@ -148,6 +179,11 @@ export default function BlogDetails() {
   }
 
   const handleMakeReported = (id) => {
+    if (!user) {
+      toast.error("Please login to report blogs");
+      return navigate("/login");
+    }
+
     const makeReported = async () => {
       const res = await axiosSecure.patch(`/blogs/make-reported/${id}`);
       if (res?.data?.modifiedCount > 0) {
@@ -180,24 +216,82 @@ export default function BlogDetails() {
   };
 
   const handleUpvote = async () => {
-    isDownvoted && handleDownvote();
+    if (!user) {
+      toast.error("Please login to upvote");
+      return navigate("/login");
+    }
     const res = await axiosSecure.put(
       `/blogs/upvote/${blog?._id}?email=${user?.email}`
     );
-    if (res?.data?.modifiedCount > 0) {
+    if (res?.data?.success) {
       refetchIsUpvoted();
+      refetchIsDownvoted();
       refetchBlog();
     }
   };
 
   const handleDownvote = async () => {
-    isUpvoted && handleUpvote();
+    if (!user) {
+      toast.error("Please login to downvote");
+      return navigate("/login");
+    }
     const res = await axiosSecure.put(
       `/blogs/downvote/${blog?._id}?email=${user?.email}`
     );
-    if (res.data.modifiedCount > 0) {
+    if (res?.data?.success) {
+      refetchIsUpvoted();
       refetchIsDownvoted();
       refetchBlog();
+    }
+  };
+
+  const handleToggleSave = async () => {
+    if (!user) {
+      toast.error("Please login to save blogs");
+      return navigate("/login");
+    }
+    
+    if (isSaved) {
+      const res = await axiosSecure.delete(`/saved-blogs/${blog?._id}?email=${user?.email}`);
+      if (res.data.deletedCount > 0) {
+        toast.success("Blog removed from saved list");
+        refetchIsSaved();
+      }
+    } else {
+      const res = await axiosSecure.post("/saved-blogs", {
+        userEmail: user?.email,
+        blogId: blog?._id,
+      });
+      if (res.data.insertedId) {
+        toast.success("Blog saved successfully");
+        refetchIsSaved();
+      }
+    }
+  };
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    const shareData = {
+      title: blog?.blogName || "Okkhor Blog",
+      text: blog?.blogDescription?.slice(0, 100) + "...",
+      url: url,
+    };
+
+    try {
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(url);
+        toast.success("Link copied to clipboard!");
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
+      // Fallback for when navigator.share throws AbortError (user cancelled) or something else
+      if (err.name !== "AbortError") {
+        navigator.clipboard.writeText(url).then(() => {
+          toast.success("Link copied to clipboard!");
+        }).catch(console.error);
+      }
     }
   };
 
@@ -228,7 +322,7 @@ export default function BlogDetails() {
             {blog?.blogName}
           </h1>
 
-          <div className="flex items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
             {blog?.ownerId && (
               <div className="flex items-center gap-2">
                 {blog?.ownerId?.photoUrl && (
@@ -237,6 +331,7 @@ export default function BlogDetails() {
                 <span className="font-medium text-gray-900 dark:text-gray-200">{blog.ownerId.name}</span>
               </div>
             )}
+            <span className="flex items-center gap-1"><BsEye size={16} /> {blog?.views || 0}</span>
             <span>{new Date(blog?.date).toLocaleDateString()}</span>
           </div>
         </header>
@@ -258,46 +353,67 @@ export default function BlogDetails() {
         </div>
 
         {/* Action Bar */}
-        <div className="mb-12 flex flex-col items-center justify-between gap-6 rounded-2xl bg-gray-50 p-6 sm:flex-row dark:bg-gray-900">
-          <div className="flex items-center gap-4">
+        <div className="mb-12 flex flex-wrap items-center justify-between gap-4 border-y border-gray-100 py-4 dark:border-gray-800">
+          <div className="flex flex-wrap items-center gap-2">
             <button
-              disabled={user?.email === blog?.ownerId?.email || !user}
+              disabled={user?.email === blog?.ownerId?.email}
               onClick={handleUpvote}
-              className={`flex items-center gap-2 rounded-xl px-4 py-2 font-semibold transition-all ${isUpvoted
-                ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
-                : "bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+              className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all ${isUpvoted
+                ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400"
+                : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
                 }`}
             >
-              {isUpvoted ? <BsCaretUpFill size={20} /> : <BsCaretUp size={20} />}
+              {isUpvoted ? <BsCaretUpFill size={18} /> : <BsCaretUp size={18} />}
               <span>{blog?.upvotes}</span>
             </button>
+            
+            <div className="h-6 w-px bg-gray-200 dark:bg-gray-700 mx-1 hidden sm:block"></div>
+
             <button
-              disabled={user?.email === blog?.ownerId?.email || !user}
+              disabled={user?.email === blog?.ownerId?.email}
               onClick={handleDownvote}
-              className={`flex items-center gap-2 rounded-xl px-4 py-2 font-semibold transition-all ${isDownvoted
-                ? "bg-red-600 text-white shadow-md hover:bg-red-700"
-                : "bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+              className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all ${isDownvoted
+                ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"
+                : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
                 }`}
             >
-              {isDownvoted ? <BsCaretDownFill size={20} /> : <BsCaretDown size={20} />}
+              {isDownvoted ? <BsCaretDownFill size={18} /> : <BsCaretDown size={18} />}
               <span>{blog?.downvotes}</span>
             </button>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={handleToggleSave}
+              className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                isSaved 
+                  ? "bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400"
+                  : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+              }`}
+            >
+              {isSaved ? <BsBookmarkFill size={16} /> : <BsBookmark size={16} />}
+              <span className="hidden sm:inline">{isSaved ? "Saved" : "Save"}</span>
+            </button>
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            >
+              <BsShare size={16} />
+              <span className="hidden sm:inline">Share</span>
+            </button>
             <button
               onClick={() => handleMakeReported(blog?._id)}
-              className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-red-50 hover:text-red-600 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-red-50 hover:text-red-600 dark:text-gray-400 dark:hover:bg-red-900/20 dark:hover:text-red-400"
             >
               <GoReport size={18} />
-              Report
+              <span className="hidden sm:inline">Report</span>
             </button>
             <button
               onClick={openAddModal}
-              className="flex items-center gap-2 rounded-lg bg-black px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              className="ml-2 flex items-center gap-2 rounded-full bg-black px-5 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
               <FaPen size={14} />
-              Add Review
+              Write Review
             </button>
           </div>
         </div>

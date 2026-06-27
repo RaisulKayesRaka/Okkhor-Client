@@ -25,7 +25,7 @@ export default function MainContent({ toggleSidebar, isSidebarVisible }) {
           </div>
         </div>
 
-        <div className="p-4">
+        <div className="mx-auto w-full max-w-7xl p-6 lg:p-8">
           <Outlet />
         </div>
       </main>

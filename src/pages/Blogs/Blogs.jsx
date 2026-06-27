@@ -74,7 +74,7 @@ export default function Blogs() {
               onChange={handleSearch}
               type="text"
               name="search"
-              placeholder="Search by tag..."
+              placeholder="Search by title..."
               className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white sm:w-64"
             />
             <select
@@ -85,6 +85,7 @@ export default function Blogs() {
             >
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
+              <option value="popular">Popular</option>
             </select>
           </div>
         </div>

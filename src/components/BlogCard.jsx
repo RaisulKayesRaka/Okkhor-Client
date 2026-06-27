@@ -1,67 +1,9 @@
-import {
-  BsCaretDown,
-  BsCaretDownFill,
-  BsCaretUp,
-  BsCaretUpFill,
-} from "react-icons/bs";
+import { BsEye, BsClock } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import useAxiosSecure from "../hooks/useAxiosSecure";
-import useAuth from "../hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
+import { formatDistanceToNow } from "date-fns";
 
 export default function BlogCard({ blog, refetch }) {
-  const { user, loading } = useAuth();
-  const axiosSecure = useAxiosSecure();
-
-  const { data: isUpvoted = false, refetch: refetchIsUpvoted } = useQuery({
-    enabled: !loading && !!blog?._id,
-    queryKey: ["isUpvoted", blog?._id, user?.email],
-    queryFn: async () => {
-      if (!user?.email) return false;
-      const { data } = await axiosSecure.get(
-        `/blogs/is-upvoted/${blog?._id}?email=${user?.email}`
-      );
-      return data;
-    },
-  });
-
-  const { data: isDownvoted = false, refetch: refetchIsDownvoted } = useQuery({
-    enabled: !loading && !!blog?._id,
-    queryKey: ["isDownvoted", blog?._id, user?.email],
-    queryFn: async () => {
-      if (!user?.email) return false;
-      const { data } = await axiosSecure.get(
-        `/blogs/is-downvoted/${blog?._id}?email=${user?.email}`
-      );
-      return data;
-    },
-  });
-
-  const handleUpvote = async (e) => {
-    e.stopPropagation(); // Prevent card click
-    isDownvoted && handleDownvote(e);
-    const res = await axiosSecure.put(
-      `/blogs/upvote/${blog?._id}?email=${user?.email}`
-    );
-    if (res.data.modifiedCount > 0) {
-      refetchIsUpvoted();
-      refetch();
-    }
-  };
-
-  const handleDownvote = async (e) => {
-    e.stopPropagation(); // Prevent card click
-    isUpvoted && handleUpvote(e);
-    const res = await axiosSecure.put(
-      `/blogs/downvote/${blog?._id}?email=${user?.email}`
-    );
-    if (res.data.modifiedCount > 0) {
-      refetchIsDownvoted();
-      refetch();
-    }
-  };
-
   return (
     <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700">
       <Link to={`/blogs/${blog?._id}`} className="block overflow-hidden">
@@ -108,34 +50,16 @@ export default function BlogCard({ blog, refetch }) {
             <span className="font-medium text-gray-700 dark:text-gray-300">{blog?.ownerId?.name}</span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button
-              disabled={user?.email === blog?.ownerId?.email || !user}
-              onClick={handleUpvote}
-              className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${isUpvoted
-                ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                }`}
-            >
-              {isUpvoted ? <BsCaretUpFill size={18} /> : <BsCaretUp size={18} />}
-              <span>{blog?.upvotes}</span>
-            </button>
-
-            <button
-              disabled={user?.email === blog?.ownerId?.email || !user}
-              onClick={handleDownvote}
-              className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${isDownvoted
-                ? "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                }`}
-            >
-              {isDownvoted ? (
-                <BsCaretDownFill size={18} />
-              ) : (
-                <BsCaretDown size={18} />
-              )}
-              <span>{blog?.downvotes}</span>
-            </button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-400" title="Views">
+              <BsEye size={16} />
+              <span>{blog?.views || 0}</span>
+            </div>
+            
+            <div className="flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-400" title="Published">
+              <BsClock size={15} />
+              <span>{blog?.date ? formatDistanceToNow(new Date(blog.date), { addSuffix: true }) : ''}</span>
+            </div>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import ErrorPage from "../pages/ErrorPage";
 import Home from "../pages/Home";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import ForgotPassword from "../pages/Auth/ForgotPassword";
 import Blogs from "../pages/Blogs/Blogs";
 import BlogDetails from "../pages/Blogs/BlogDetails";
 import PrivateRoute from "./PrivateRoute";
@@ -11,6 +12,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MyProfile from "../pages/Dashboard/User/MyProfile";
 import AddBlog from "../pages/Dashboard/User/AddBlog";
 import MyBlogs from "../pages/Dashboard/User/MyBlogs";
+import SavedBlogs from "../pages/Dashboard/User/SavedBlogs";
 import BlogReviewQueue from "../pages/Dashboard/Moderator/BlogReviewQueue";
 import ReportedContents from "../pages/Dashboard/Moderator/ReportedContents";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
@@ -46,11 +48,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/blogs/:id",
-        element: (
-          <PrivateRoute>
-            <BlogDetails />
-          </PrivateRoute>
-        ),
+        element: <BlogDetails />,
       },
       {
         path: "/login",
@@ -61,6 +59,10 @@ export const router = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
   },
   {
     path: "/dashboard",
@@ -89,6 +91,10 @@ export const router = createBrowserRouter([
       {
         path: "my-blogs",
         element: <MyBlogs />,
+      },
+      {
+        path: "saved-blogs",
+        element: <SavedBlogs />,
       },
       {
         path: "blog-review-queue",

@@ -8,6 +8,11 @@ import {
   updateProfile,
   signInWithPopup,
   onAuthStateChanged,
+  deleteUser,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { app } from "../../firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
@@ -34,13 +39,30 @@ export default function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   };
   const updateUserProfile = (updatedData) => {
-    setLoading(true);
     return updateProfile(auth.currentUser, updatedData);
+  };
+  
+  const updateUserPassword = (newPassword) => {
+    return updatePassword(auth.currentUser, newPassword);
+  };
+
+  const reauthenticateUser = (oldPassword) => {
+    const credential = EmailAuthProvider.credential(auth.currentUser.email, oldPassword);
+    return reauthenticateWithCredential(auth.currentUser, credential);
+  };
+
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
   };
 
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
+  };
+
+  const deleteUserProfile = () => {
+    setLoading(true);
+    return deleteUser(auth.currentUser);
   };
 
   const authInfo = {
@@ -50,6 +72,10 @@ export default function AuthProvider({ children }) {
     userLogin,
     googleLogIn,
     updateUserProfile,
+    updateUserPassword,
+    reauthenticateUser,
+    resetPassword,
+    deleteUserProfile,
     logOut,
     loading,
     setLoading,
