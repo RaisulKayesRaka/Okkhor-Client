@@ -60,7 +60,7 @@ export default function SystemLogs() {
                       {log.details}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
-                      {log.triggeredBy}
+                      {log.triggeredBy?.name || log.triggeredBy?.email || "Unknown"}
                     </td>
                   </tr>
                 ))}

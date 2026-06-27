@@ -17,11 +17,11 @@ export default function Blogs() {
 
   useEffect(() => {
     const fetchBlogsCount = async () => {
-      const res = await axiosSecure.get("/blogs-count");
+      const res = await axiosSecure.get(`/blogs-count?status=Accepted&search=${search}`);
       setCount(res?.data?.count);
     };
     fetchBlogsCount();
-  }, [axiosSecure]);
+  }, [axiosSecure, search]);
 
   const {
     data: blogs = [],

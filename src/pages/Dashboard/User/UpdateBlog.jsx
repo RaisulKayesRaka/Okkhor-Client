@@ -3,7 +3,6 @@ import { WithContext as ReactTags } from "react-tag-input";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
-import { imageUpload } from "../../../apis/utils";
 import Loading from "../../../components/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,7 +20,15 @@ export default function AddBlog() {
     queryKey: ["blog", id],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/blogs/${id}`);
-      setTags(data?.blogTags);
+      if (data?.blogTags && data.blogTags.length > 0) {
+        if (typeof data.blogTags[0] === 'string') {
+          setTags(data.blogTags.map(tag => ({ id: tag, text: tag })));
+        } else {
+          setTags(data.blogTags);
+        }
+      } else {
+        setTags([]);
+      }
       return data;
     },
   });
@@ -60,15 +67,11 @@ export default function AddBlog() {
     setLoading(true);
     const form = e.target;
     const blogName = form.blogName.value;
-    const blogImage = form.blogImage.files[0];
+    const blogImageUrl = form.blogImage.value || blog?.blogImage;
     const blogDescription = form.blogDescription.value;
     const ownerName = user?.displayName;
     const ownerImage = user?.photoURL;
     const ownerEmail = user?.email;
-
-    const blogImageUrl = blogImage
-      ? await imageUpload(blogImage)
-      : blog?.blogImage;
 
     const blogData = {
       blogName,
@@ -130,14 +133,15 @@ export default function AddBlog() {
 
               <div>
                 <label className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
-                  Blog Image
+                  Blog Image URL
                 </label>
                 <input
-                  type="file"
+                  type="url"
                   name="blogImage"
                   id="blogImage"
-                  className="block w-full rounded-lg border border-gray-200 bg-gray-50 text-sm file:mr-4 file:rounded-md file:border-0 file:bg-gray-200 file:px-4 file:py-2 file:text-sm file:font-semibold hover:file:bg-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:file:bg-gray-800 dark:file:text-white dark:hover:file:bg-gray-700"
-                  accept="image/*"
+                  defaultValue={blog?.blogImage}
+                  className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                  placeholder="https://example.com/image.jpg"
                 />
               </div>
 

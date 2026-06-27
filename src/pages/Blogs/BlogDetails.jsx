@@ -220,7 +220,7 @@ export default function BlogDetails() {
                 key={index}
                 className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
               >
-                #{tag?.text || tag?.id}
+                #{typeof tag === 'object' ? (tag?.text || tag?.id) : tag}
               </span>
             ))}
           </div>
@@ -229,12 +229,12 @@ export default function BlogDetails() {
           </h1>
 
           <div className="flex items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-            {blog?.ownerName && (
+            {blog?.ownerId && (
               <div className="flex items-center gap-2">
-                {blog?.ownerImage && (
-                  <img src={blog.ownerImage} alt={blog.ownerName} className="h-8 w-8 rounded-full object-cover" />
+                {blog?.ownerId?.photoUrl && (
+                  <img src={blog.ownerId.photoUrl} alt={blog.ownerId.name} className="h-8 w-8 rounded-full object-cover" />
                 )}
-                <span className="font-medium text-gray-900 dark:text-gray-200">{blog.ownerName}</span>
+                <span className="font-medium text-gray-900 dark:text-gray-200">{blog.ownerId.name}</span>
               </div>
             )}
             <span>{new Date(blog?.date).toLocaleDateString()}</span>
@@ -261,7 +261,7 @@ export default function BlogDetails() {
         <div className="mb-12 flex flex-col items-center justify-between gap-6 rounded-2xl bg-gray-50 p-6 sm:flex-row dark:bg-gray-900">
           <div className="flex items-center gap-4">
             <button
-              disabled={user?.email === blog?.ownerEmail || !user}
+              disabled={user?.email === blog?.ownerId?.email || !user}
               onClick={handleUpvote}
               className={`flex items-center gap-2 rounded-xl px-4 py-2 font-semibold transition-all ${isUpvoted
                 ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
@@ -272,7 +272,7 @@ export default function BlogDetails() {
               <span>{blog?.upvotes}</span>
             </button>
             <button
-              disabled={user?.email === blog?.ownerEmail || !user}
+              disabled={user?.email === blog?.ownerId?.email || !user}
               onClick={handleDownvote}
               className={`flex items-center gap-2 rounded-xl px-4 py-2 font-semibold transition-all ${isDownvoted
                 ? "bg-red-600 text-white shadow-md hover:bg-red-700"

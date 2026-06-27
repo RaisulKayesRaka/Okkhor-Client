@@ -77,12 +77,12 @@ export default function BlogCard({ blog, refetch }) {
 
       <div className="flex flex-1 flex-col p-5">
         <div className="mb-3 flex flex-wrap gap-2">
-          {blog?.blogTags.slice(0, 3).map((tag, index) => (
+          {blog?.blogTags?.slice(0, 3).map((tag, index) => (
             <span
               key={index}
               className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300"
             >
-              #{tag?.text || tag?.id}
+              #{typeof tag === 'object' ? (tag?.text || tag?.id) : tag}
             </span>
           ))}
         </div>
@@ -98,19 +98,19 @@ export default function BlogCard({ blog, refetch }) {
 
         <div className="mt-4 flex items-center justify-between border-t pt-4 dark:border-gray-800">
           <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-            <p title={blog?.ownerName}>
+            <p title={blog?.ownerId?.name}>
               <img
                 className="h-8 w-8 rounded-full object-cover ring-2 ring-gray-100 dark:ring-gray-800"
-                src={blog?.ownerImage}
-                alt={blog?.ownerName}
+                src={blog?.ownerId?.photoUrl}
+                alt={blog?.ownerId?.name}
               />
             </p>
-            <span className="font-medium text-gray-700 dark:text-gray-300">{blog?.ownerName}</span>
+            <span className="font-medium text-gray-700 dark:text-gray-300">{blog?.ownerId?.name}</span>
           </div>
 
           <div className="flex items-center gap-3">
             <button
-              disabled={user?.email === blog?.ownerEmail || !user}
+              disabled={user?.email === blog?.ownerId?.email || !user}
               onClick={handleUpvote}
               className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${isUpvoted
                 ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
@@ -122,7 +122,7 @@ export default function BlogCard({ blog, refetch }) {
             </button>
 
             <button
-              disabled={user?.email === blog?.ownerEmail || !user}
+              disabled={user?.email === blog?.ownerId?.email || !user}
               onClick={handleDownvote}
               className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${isDownvoted
                 ? "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"
