@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaUser, FaUsersCog } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
-import { MdLibraryAddCheck, MdRateReview } from "react-icons/md";
+import { MdLibraryAddCheck, MdRateReview, MdHistory } from "react-icons/md";
 import { AiFillProduct } from "react-icons/ai";
 import { TbMessageReportFilled } from "react-icons/tb";
 import useRole from "../../hooks/useRole";
@@ -59,6 +59,9 @@ export default function Sidebar({ toggleSidebar }) {
                 <NavLink to="my-profile" onClick={handleLinkClick} className={navLinkClasses}>
                   <FaUser className="text-lg" /> <span>My Profile</span>
                 </NavLink>
+                <NavLink to="analytics" onClick={handleLinkClick} className={navLinkClasses}>
+                  <IoStatsChart className="text-lg" /> <span>Analytics</span>
+                </NavLink>
                 <NavLink to="add-blog" onClick={handleLinkClick} className={navLinkClasses}>
                   <MdLibraryAddCheck className="text-lg" /> <span>Add Blog</span>
                 </NavLink>
@@ -83,6 +86,9 @@ export default function Sidebar({ toggleSidebar }) {
               <>
                 <NavLink to="manage-users" onClick={handleLinkClick} className={navLinkClasses}>
                   <FaUsersCog className="text-lg" /> <span>Manage Users</span>
+                </NavLink>
+                <NavLink to="system-logs" onClick={handleLinkClick} className={navLinkClasses}>
+                  <MdHistory className="text-lg" /> <span>System Logs</span>
                 </NavLink>
               </>
             )}

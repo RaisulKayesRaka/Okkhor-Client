@@ -19,6 +19,8 @@ import ModeratorRoute from "./ModeratorRoute";
 import UpdateBlog from "../pages/Dashboard/User/UpdateBlog";
 import About from "../pages/About";
 import FAQ from "../pages/FAQ";
+import Analytics from "../pages/Dashboard/User/Analytics";
+import SystemLogs from "../pages/Dashboard/Admin/SystemLogs";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +75,10 @@ export const router = createBrowserRouter([
         element: <MyProfile />,
       },
       {
+        path: "analytics",
+        element: <Analytics />,
+      },
+      {
         path: "add-blog",
         element: <AddBlog />,
       },
@@ -105,6 +111,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "system-logs",
+        element: (
+          <AdminRoute>
+            <SystemLogs />
           </AdminRoute>
         ),
       },

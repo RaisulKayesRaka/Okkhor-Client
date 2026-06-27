@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const axiosSecure = axios.create({
-  baseURL: "https://okkhor-server.vercel.app",
+  baseURL: import.meta.env.VITE_baseUrl || "http://localhost:5000",
 });
 
 export default function useAxiosSecure() {

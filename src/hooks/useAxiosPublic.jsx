@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const axiosPublic = axios.create({
-  baseURL: "https://okkhor-server.vercel.app",
+  baseURL: import.meta.env.VITE_baseUrl || "http://localhost:5000",
 });
 
 axiosPublic.interceptors.response.use(
