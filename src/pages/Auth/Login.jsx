@@ -182,6 +182,42 @@ export default function Login() {
             <hr className="flex-1 border-gray-200 dark:border-gray-700" />
           </div>
 
+          <div className="mb-4 grid grid-cols-3 gap-2">
+            <button
+              onClick={() => {
+                if (emailRef.current) emailRef.current.value = "raisulkayesofficial@gmail.com";
+                const passwordInput = document.getElementById("password");
+                if (passwordInput) passwordInput.value = "Password@123";
+              }}
+              type="button"
+              className="rounded-xl border border-gray-200 bg-white py-2 text-xs font-bold text-gray-700 transition hover:bg-gray-50 focus:scale-[0.98] dark:border-gray-700 dark:bg-transparent dark:text-white dark:hover:bg-gray-800"
+            >
+              Demo User
+            </button>
+            <button
+              onClick={() => {
+                if (emailRef.current) emailRef.current.value = "moderator@okkhor.com";
+                const passwordInput = document.getElementById("password");
+                if (passwordInput) passwordInput.value = "Password@123";
+              }}
+              type="button"
+              className="rounded-xl border border-gray-200 bg-white py-2 text-xs font-bold text-gray-700 transition hover:bg-gray-50 focus:scale-[0.98] dark:border-gray-700 dark:bg-transparent dark:text-white dark:hover:bg-gray-800"
+            >
+              Demo Mod
+            </button>
+            <button
+              onClick={() => {
+                if (emailRef.current) emailRef.current.value = "admin@okkhor.com";
+                const passwordInput = document.getElementById("password");
+                if (passwordInput) passwordInput.value = "Password@123";
+              }}
+              type="button"
+              className="rounded-xl border border-gray-200 bg-white py-2 text-xs font-bold text-gray-700 transition hover:bg-gray-50 focus:scale-[0.98] dark:border-gray-700 dark:bg-transparent dark:text-white dark:hover:bg-gray-800"
+            >
+              Demo Admin
+            </button>
+          </div>
+
           <button
             onClick={handleGoogleLogIn}
             type="button"
