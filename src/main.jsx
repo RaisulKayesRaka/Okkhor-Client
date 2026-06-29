@@ -11,12 +11,6 @@ import ThemeProvider from "./providers/ThemeProvider";
 import toast from "react-hot-toast";
 
 const queryClient = new QueryClient({
-  queryCache: new QueryCache({
-    onError: (error) => {
-      console.error(error);
-      toast.error(error?.response?.data?.message || "An error occurred during data fetching.", { id: "query-error" });
-    },
-  }),
   mutationCache: new MutationCache({
     onError: (error) => {
       console.error(error);
