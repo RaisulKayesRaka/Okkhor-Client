@@ -1,26 +1,34 @@
 import { Helmet } from "react-helmet-async";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
   const navigate = useNavigate();
+  const error = useRouteError();
+  const is404 = error?.status === 404;
+
   return (
     <>
       <Helmet>
-        <title>404 - Page Not Found</title>
+        <title>{is404 ? "404 - Page Not Found" : "Error | Okkhor"}</title>
       </Helmet>
       <section className="mx-auto flex h-screen w-11/12 max-w-screen-xl flex-col items-center justify-center px-4">
-        <img
-          onClick={() => navigate("/")}
-          className="w-40 cursor-pointer transition-transform hover:scale-105 sm:w-48 md:w-56"
-          src="./page-not-found.svg"
-          alt="Page Not Found"
-        />
-        <h1 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-          Page Not Found
+        {is404 ? (
+          <img
+            onClick={() => navigate("/")}
+            className="w-40 cursor-pointer transition-transform hover:scale-105 sm:w-48 md:w-56"
+            src="./page-not-found.svg"
+            alt="Page Not Found"
+          />
+        ) : (
+          <div className="text-6xl text-red-500 mb-6">⚠️</div>
+        )}
+        <h1 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl text-center">
+          {is404 ? "Page Not Found" : "Oops! Something went wrong."}
         </h1>
         <p className="mt-2 text-center text-gray-600 dark:text-gray-400">
-          The page you&apos;re looking for doesn&apos;t exist, has been moved, or
-          is temporarily unavailable.
+          {is404
+            ? "The page you're looking for doesn't exist, has been moved, or is temporarily unavailable."
+            : error?.message || error?.statusText || "An unexpected error has occurred."}
         </p>
         <Link
           to="/"
