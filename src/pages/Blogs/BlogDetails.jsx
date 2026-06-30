@@ -10,7 +10,7 @@ import {
   BsEye,
   BsShare,
 } from "react-icons/bs";
-import { FaPen } from "react-icons/fa";
+import { FaPen, FaReply } from "react-icons/fa";
 import { GoReport } from "react-icons/go";
 import { IoClose } from "react-icons/io5";
 import { useParams, useNavigate, Link } from "react-router-dom";
@@ -26,6 +26,7 @@ export default function BlogDetails() {
   const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [editingReview, setEditingReview] = useState(null);
+  const [replyingTo, setReplyingTo] = useState(null);
 
   useEffect(() => {
     if (id && !sessionStorage.getItem(`viewed_${id}`)) {
@@ -86,9 +87,9 @@ export default function BlogDetails() {
   });
 
   const {
-    data: reviews = [],
-    isLoading: isLoadingReviews,
-    refetch: refetchReviews,
+    data: comments = [],
+    isLoading: isLoadingComments,
+    refetch: refetchComments,
   } = useQuery({
     queryKey: ["reviews", id],
     queryFn: async () => {
@@ -97,7 +98,28 @@ export default function BlogDetails() {
     },
   });
 
-  const handleAddReview = async (e) => {
+  const buildCommentTree = (flatComments) => {
+    const commentMap = {};
+    const tree = [];
+
+    flatComments.forEach(comment => {
+      commentMap[comment._id] = { ...comment, children: [] };
+    });
+
+    flatComments.forEach(comment => {
+      if (comment.parentId && commentMap[comment.parentId]) {
+        commentMap[comment.parentId].children.push(commentMap[comment._id]);
+      } else {
+        tree.push(commentMap[comment._id]);
+      }
+    });
+
+    return tree;
+  };
+
+  const commentTree = buildCommentTree(comments);
+
+  const handleAddComment = async (e) => {
     e.preventDefault();
     const form = e.target;
     const review = form.review.value;
@@ -105,10 +127,10 @@ export default function BlogDetails() {
     if (editingReview) {
       const { data } = await axiosSecure.patch(`/reviews/${editingReview._id}`, { review });
       if (data?.modifiedCount > 0) {
-        toast.success("Review updated successfully");
+        toast.success("Comment updated successfully");
         setEditingReview(null);
         form.reset();
-        refetchReviews();
+        refetchComments();
       }
     } else {
       const newReview = {
@@ -117,30 +139,31 @@ export default function BlogDetails() {
         reviewerName: user?.displayName,
         reviewerImage: user?.photoURL,
         review,
-        // reviewDate is no longer sent manually as createdAt handles it
+        parentId: replyingTo,
       };
 
       const { data } = await axiosSecure.post("/reviews", newReview);
       if (data?.insertedId) {
-        toast.success("Review added successfully");
+        toast.success(replyingTo ? "Reply added successfully" : "Comment added successfully");
         form.reset();
-        refetchReviews();
+        refetchComments();
       }
     }
     document.getElementById("add-review-modal").classList.add("hidden");
+    setReplyingTo(null);
   };
 
-  const handleDeleteReview = async (reviewId) => {
+  const handleDeleteComment = async (reviewId) => {
     toast((t) => (
       <div className="flex flex-col items-center justify-center gap-4">
-        <div className="text-sm font-medium">Delete this review?</div>
+        <div className="text-sm font-medium">Delete this comment?</div>
         <div className="flex items-center gap-3">
           <button
             onClick={async () => {
               const { data } = await axiosSecure.delete(`/reviews/${reviewId}`);
-              if (data?.deletedCount > 0) {
-                toast.success("Review deleted successfully");
-                refetchReviews();
+              if (data?.deletedCount > 0 || data?.modifiedCount > 0) {
+                toast.success("Comment deleted");
+                refetchComments();
               }
               toast.dismiss(t.id);
             }}
@@ -161,22 +184,24 @@ export default function BlogDetails() {
 
   const openEditModal = (review) => {
     setEditingReview(review);
+    setReplyingTo(null);
     const modal = document.getElementById("add-review-modal");
     const textarea = document.getElementById("review");
     if (textarea) textarea.value = review.review;
     modal.classList.remove("hidden");
   };
 
-  const openAddModal = () => {
+  const openAddModal = (parentId = null) => {
     if (!user) {
-      toast.error("Please login to write a review");
+      toast.error("Please login to comment");
       return navigate("/login");
     }
     setEditingReview(null);
+    setReplyingTo(parentId);
     const textarea = document.getElementById("review");
     if (textarea) textarea.value = "";
     document.getElementById("add-review-modal").classList.remove("hidden");
-  }
+  };
 
   const handleMakeReported = (id) => {
     if (!user) {
@@ -286,7 +311,6 @@ export default function BlogDetails() {
       }
     } catch (err) {
       console.error("Error sharing:", err);
-      // Fallback for when navigator.share throws AbortError (user cancelled) or something else
       if (err.name !== "AbortError") {
         navigator.clipboard.writeText(url).then(() => {
           toast.success("Link copied to clipboard!");
@@ -295,9 +319,79 @@ export default function BlogDetails() {
     }
   };
 
-  if (isLoading || isLoadingReviews) {
+  if (isLoading || isLoadingComments) {
     return <Loading />;
   }
+
+  const CommentItem = ({ comment, isReply = false }) => {
+    return (
+      <div className={`relative ${isReply ? "mt-4 ml-6 sm:ml-10 border-l-2 border-gray-100 pl-4 sm:pl-6 dark:border-gray-800" : ""}`}>
+        <div className="group relative rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+          <div className="mb-4 flex items-center justify-between">
+            <Link to={comment.isDeleted ? "#" : `/author/${comment?.reviewerId}`} className="flex items-center gap-3">
+              {!comment.isDeleted && comment?.reviewerImage ? (
+                <img
+                  src={comment?.reviewerImage}
+                  className="h-10 w-10 rounded-full object-cover ring-2 ring-gray-50 dark:ring-gray-800"
+                  alt={comment?.reviewerName}
+                />
+              ) : (
+                <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-800"></div>
+              )}
+              <div>
+                <h4 className={`font-semibold ${comment.isDeleted ? 'text-gray-400 italic' : 'text-gray-900 dark:text-white'}`}>
+                  {comment.isDeleted ? "[Deleted User]" : comment?.reviewerName}
+                </h4>
+                <p className="text-xs text-gray-500">{new Date(comment.createdAt).toLocaleDateString()}</p>
+              </div>
+            </Link>
+            
+            {!comment.isDeleted && (
+              <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+                <button
+                  onClick={() => openAddModal(comment._id)}
+                  className="rounded-lg p-2 text-blue-500 hover:bg-blue-50 hover:text-blue-600 dark:text-blue-400 dark:hover:bg-blue-900/20"
+                  title="Reply"
+                >
+                  <FaReply size={12} />
+                </button>
+                {user?.email === comment?.reviewerEmail && (
+                  <>
+                    <button
+                      onClick={() => openEditModal(comment)}
+                      className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-black dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+                      title="Edit"
+                    >
+                      <FaPen size={12} />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteComment(comment._id)}
+                      className="rounded-lg p-2 text-gray-500 hover:bg-red-50 hover:text-red-500 dark:text-gray-400 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                      title="Delete"
+                    >
+                      <IoClose size={16} />
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+          <p className={`text-sm ${comment.isDeleted ? 'text-gray-400 italic' : 'text-gray-700 dark:text-gray-300'}`}>
+            {comment?.review}
+          </p>
+        </div>
+
+        {/* Recursively render children */}
+        {comment.children && comment.children.length > 0 && (
+          <div className="mt-2 space-y-2">
+            {comment.children.map(child => (
+              <CommentItem key={child._id} comment={child} isReply={true} />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <>
@@ -407,71 +501,38 @@ export default function BlogDetails() {
               <span className="hidden sm:inline">Report</span>
             </button>
             <button
-              onClick={openAddModal}
+              onClick={() => openAddModal(null)}
               className="ml-2 flex items-center gap-2 rounded-full bg-black px-5 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
             >
               <FaPen size={14} />
-              Write Review
+              Write Comment
             </button>
           </div>
         </div>
 
-        {/* Reviews Section */}
+        {/* Comments Section */}
         <section>
           <h3 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white">
-            Reviews
+            Comments
             <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-400">
-              {reviews.length}
+              {comments.length}
             </span>
           </h3>
 
-          <div className="space-y-4">
-            {reviews.length === 0 ? (
+          <div className="space-y-6">
+            {commentTree.length === 0 ? (
               <div className="rounded-xl border border-dashed border-gray-300 p-8 text-center text-gray-500 dark:border-gray-700">
-                No reviews yet. Be the first to share your thoughts!
+                No comments yet. Be the first to share your thoughts!
               </div>
             ) : (
-              reviews.map((review) => (
-                <div key={review._id} className="group relative rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
-                  <div className="mb-4 flex items-center justify-between">
-                    <Link to={`/author/${review?.reviewerId}`} className="flex items-center gap-3">
-                      <img
-                        src={review?.reviewerImage}
-                        className="h-10 w-10 rounded-full object-cover ring-2 ring-gray-50 dark:ring-gray-800"
-                        alt={review?.reviewerName}
-                      />
-                      <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white">{review?.reviewerName}</h4>
-                        <p className="text-xs text-gray-500">{new Date(review.createdAt).toLocaleDateString()}</p>
-                      </div>
-                    </Link>
-                    {user?.email === review?.reviewerEmail && (
-                      <div className="flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                        <button
-                          onClick={() => openEditModal(review)}
-                          className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-black dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-                          title="Edit"
-                        >
-                          <FaPen size={12} />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteReview(review._id)}
-                          className="rounded-lg p-2 text-gray-500 hover:bg-red-50 hover:text-red-500 dark:text-gray-400 dark:hover:bg-red-900/20 dark:hover:text-red-400"
-                          title="Delete"
-                        >
-                          <IoClose size={16} />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  <p className="text-gray-700 dark:text-gray-300">{review?.review}</p>
-                </div>
+              commentTree.map((comment) => (
+                <CommentItem key={comment._id} comment={comment} />
               ))
             )}
           </div>
         </section>
 
-        {/* Review Modal */}
+        {/* Comment Modal */}
         <div
           id="add-review-modal"
           className="fixed inset-0 z-50 hidden h-full w-full overflow-y-auto bg-black/60 backdrop-blur-sm transition-opacity"
@@ -479,22 +540,23 @@ export default function BlogDetails() {
           <div className="flex min-h-full items-center justify-center p-4">
             <div className="relative w-full max-w-lg rounded-2xl bg-white p-8 shadow-2xl dark:bg-gray-950">
               <button
-                onClick={() =>
-                  document.getElementById("add-review-modal").classList.add("hidden")
-                }
+                onClick={() => {
+                  document.getElementById("add-review-modal").classList.add("hidden");
+                  setReplyingTo(null);
+                }}
                 className="absolute right-4 top-4 rounded-full p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <IoClose size={24} />
               </button>
 
               <h3 className="mb-6 text-xl font-bold text-gray-900 dark:text-white">
-                {editingReview ? "Update Review" : "Write a Review"}
+                {editingReview ? "Update Comment" : replyingTo ? "Reply to Comment" : "Write a Comment"}
               </h3>
 
-              <form onSubmit={handleAddReview} className="space-y-6">
+              <form onSubmit={handleAddComment} className="space-y-6">
                 <div>
                   <label className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Your Review
+                    Your Comment
                   </label>
                   <textarea
                     id="review"
@@ -510,7 +572,7 @@ export default function BlogDetails() {
                   type="submit"
                   className="w-full rounded-xl bg-black py-3 font-bold text-white transition-transform hover:scale-[1.02] active:scale-[0.98] dark:bg-white dark:text-black"
                 >
-                  {editingReview ? "Update Review" : "Post Review"}
+                  {editingReview ? "Update Comment" : replyingTo ? "Post Reply" : "Post Comment"}
                 </button>
               </form>
             </div>
