@@ -7,12 +7,16 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import DashboardPageHeader from "../../../components/Dashboard/DashboardPageHeader";
 import DashboardCard from "../../../components/Dashboard/DashboardCard";
+import FollowListModal from "../../../components/FollowListModal";
 
 export default function MyProfile() {
   const { user, updateUserProfile, updateUserPassword, reauthenticateUser, deleteUserProfile, logOut, setUser } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("followers");
+
   const [name, setName] = useState(user?.displayName || "");
   const [photoUrl, setPhotoUrl] = useState(user?.photoURL || "");
   const [newPassword, setNewPassword] = useState("");
@@ -156,6 +160,25 @@ export default function MyProfile() {
               <p className="mt-2 text-gray-500 dark:text-gray-400">
                 {user?.email}
               </p>
+              {analytics && (
+                <div className="mt-6 flex items-center justify-center gap-6 text-sm">
+                  <div 
+                    className="flex flex-col items-center cursor-pointer transition-transform hover:scale-105"
+                    onClick={() => { setModalType("followers"); setIsModalOpen(true); }}
+                  >
+                    <span className="text-2xl font-bold text-black dark:text-white">{analytics.followersCount || 0}</span>
+                    <span className="text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors">Followers</span>
+                  </div>
+                  <div className="h-10 w-px bg-gray-300 dark:bg-gray-700"></div>
+                  <div 
+                    className="flex flex-col items-center cursor-pointer transition-transform hover:scale-105"
+                    onClick={() => { setModalType("following"); setIsModalOpen(true); }}
+                  >
+                    <span className="text-2xl font-bold text-black dark:text-white">{analytics.followingCount || 0}</span>
+                    <span className="text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors">Following</span>
+                  </div>
+                </div>
+              )}
             </DashboardCard>
           </div>
 
@@ -251,6 +274,16 @@ export default function MyProfile() {
           </div>
         </div>
       </section>
+
+      {analytics && (
+        <FollowListModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          type={modalType}
+          title={modalType === "followers" ? "Followers" : "Following"}
+          userId={analytics._id}
+        />
+      )}
     </>
   );
 }

@@ -5,10 +5,14 @@ import Loading from "../../components/Loading";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
+import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 export default function Blogs() {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  // const [blogs, setBlogs] = useState([]);
+  const axiosPublic = useAxiosPublic();
+  const [feedType, setFeedType] = useState("all");
   const [currentPage, setCurrentPage] = useState(0);
   const [count, setCount] = useState(0);
   const [search, setSearch] = useState("");
@@ -17,23 +21,34 @@ export default function Blogs() {
 
   useEffect(() => {
     const fetchBlogsCount = async () => {
-      const res = await axiosSecure.get(`/blogs-count?status=Accepted&search=${search}`);
+      let url = `/blogs-count?status=Accepted&search=${search}`;
+      if (feedType === "following" && user?.email) {
+        url += `&feedType=following&viewerEmail=${user.email}`;
+      }
+      const res = await axiosPublic.get(url);
       setCount(res?.data?.count);
     };
     fetchBlogsCount();
-  }, [axiosSecure, search]);
+  }, [axiosPublic, search, feedType, user?.email]);
 
   const {
     data: blogs = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["blogs", currentPage, itemsPerPage, search, sort],
+    queryKey: ["blogs", currentPage, itemsPerPage, search, sort, feedType, user?.email],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(
-        `/accepted-blogs?page=${currentPage}&size=${itemsPerPage}&search=${search}&sort=${sort}`,
-      );
-      return data;
+      if (feedType === "following") {
+        const { data } = await axiosSecure.get(
+          `/blogs/following?page=${currentPage}&size=${itemsPerPage}&search=${search}&sort=${sort}`
+        );
+        return data;
+      } else {
+        const { data } = await axiosPublic.get(
+          `/accepted-blogs?page=${currentPage}&size=${itemsPerPage}&search=${search}&sort=${sort}`
+        );
+        return data;
+      }
     },
   });
 
@@ -63,11 +78,35 @@ export default function Blogs() {
         <div className="mb-8 flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              All Blogs
+              Discover
             </h1>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-              Explore our latest articles and updates.
+              Explore our latest blogs and updates.
             </p>
+            {user && (
+              <div className="mt-4 flex gap-2 rounded-lg bg-gray-100 p-1 dark:bg-gray-800 sm:w-fit">
+                <button
+                  onClick={() => { setFeedType("all"); setCurrentPage(0); }}
+                  className={`rounded-md px-4 py-2 text-sm font-medium transition ${
+                    feedType === "all"
+                      ? "bg-white text-black shadow dark:bg-gray-700 dark:text-white"
+                      : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                  }`}
+                >
+                  All Blogs
+                </button>
+                <button
+                  onClick={() => { setFeedType("following"); setCurrentPage(0); }}
+                  className={`rounded-md px-4 py-2 text-sm font-medium transition ${
+                    feedType === "following"
+                      ? "bg-white text-black shadow dark:bg-gray-700 dark:text-white"
+                      : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                  }`}
+                >
+                  Following
+                </button>
+              </div>
+            )}
           </div>
           <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
             <input
@@ -92,6 +131,17 @@ export default function Blogs() {
 
         {isLoading ? (
           <Loading />
+        ) : blogs.length === 0 ? (
+          <div className="flex min-h-[40vh] flex-col items-center justify-center rounded-2xl bg-gray-50 p-8 text-center dark:bg-gray-800/50">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              No blogs found
+            </h3>
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              {feedType === "following"
+                ? "You aren't following anyone yet, or they haven't published anything!"
+                : "Try adjusting your search filters."}
+            </p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {blogs.map((blog) => (

@@ -1,5 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { Helmet } from "react-helmet-async";
@@ -10,12 +13,33 @@ export default function PublicProfile() {
   const { id } = useParams();
   const axiosPublic = useAxiosPublic();
 
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+
   const { data: author, isLoading: isAuthorLoading } = useQuery({
-    queryKey: ["publicProfile", id],
+    queryKey: ["publicProfile", id, user?.email],
     queryFn: async () => {
-      const { data } = await axiosPublic.get(`/users/public/${id}`);
+      const url = user?.email 
+        ? `/users/public/${id}?viewerEmail=${user.email}`
+        : `/users/public/${id}`;
+      const { data } = await axiosPublic.get(url);
       return data;
     },
+  });
+
+  const { mutate: toggleFollow, isPending: isFollowPending } = useMutation({
+    mutationFn: async () => {
+      const { data } = await axiosSecure.post(`/users/follow/${id}`);
+      return data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["publicProfile", id] });
+      toast.success(data.message);
+    },
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || "Failed to toggle follow");
+    }
   });
 
   const [search, setSearch] = useState("");
@@ -61,12 +85,33 @@ export default function PublicProfile() {
           <p className="mt-2 text-gray-500 dark:text-gray-400">
             Joined {new Date(author.createdAt).toLocaleDateString()}
           </p>
-          <div className="mt-6 flex items-center justify-center gap-6 text-sm">
+
+          {/* Follow Button */}
+          {user && user.email !== author.email && (
+            <button
+              onClick={() => toggleFollow()}
+              disabled={isFollowPending}
+              className={`mt-4 rounded-full px-6 py-2 text-sm font-semibold transition ${
+                author.isFollowing 
+                  ? "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+                  : "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              }`}
+            >
+              {isFollowPending ? "..." : author.isFollowing ? "Unfollow" : "Follow"}
+            </button>
+          )}
+
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-sm">
+            <div className="flex flex-col items-center">
+              <span className="text-2xl font-bold text-black dark:text-white">{author.followersCount || 0}</span>
+              <span className="text-gray-500 dark:text-gray-400">Followers</span>
+            </div>
+            <div className="hidden h-10 w-px bg-gray-300 dark:bg-gray-700 sm:block"></div>
             <div className="flex flex-col items-center">
               <span className="text-2xl font-bold text-black dark:text-white">{blogs.length}</span>
               <span className="text-gray-500 dark:text-gray-400">Published Blogs</span>
             </div>
-            <div className="h-10 w-px bg-gray-300 dark:bg-gray-700"></div>
+            <div className="hidden h-10 w-px bg-gray-300 dark:bg-gray-700 sm:block"></div>
             <div className="flex flex-col items-center">
               <span className="text-2xl font-bold text-black dark:text-white">
                 {blogs.reduce((acc, curr) => acc + (curr.views || 0), 0)}
@@ -80,14 +125,14 @@ export default function PublicProfile() {
         <div>
           <div className="mb-6 flex flex-col items-center justify-between gap-4 border-b border-gray-100 pb-4 dark:border-gray-800 sm:flex-row">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Articles by {author.name}
+              Blogs by {author.name}
             </h2>
             <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
               <input
                 onChange={(e) => setSearch(e.target.value)}
                 type="text"
                 name="search"
-                placeholder="Search articles..."
+                placeholder="Search blogs..."
                 className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white sm:w-64"
               />
               <select
@@ -102,10 +147,9 @@ export default function PublicProfile() {
               </select>
             </div>
           </div>
-          
           {blogs.length === 0 ? (
             <div className="rounded-xl border border-dashed border-gray-300 py-16 text-center dark:border-gray-700">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white">No articles published yet.</h3>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white">No blogs published yet.</h3>
               <p className="mt-2 text-gray-500 dark:text-gray-400">Check back later for new content from {author.name}.</p>
             </div>
           ) : (

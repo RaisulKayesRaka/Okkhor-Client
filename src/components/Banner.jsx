@@ -6,7 +6,7 @@ export default function Banner() {
           Discover and Share Amazing Stories
         </h1>
         <p className="max-w-2xl text-lg text-gray-600 dark:text-gray-400 md:text-xl">
-          Explore diverse perspectives, insightful articles, and creative ideas
+          Explore diverse perspectives, insightful blogs, and creative ideas
           from writers around the world. Join our community to share your own
           journey on any topic.
         </p>

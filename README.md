@@ -6,7 +6,8 @@ Okkhor-Client is the interactive frontend of the Okkhor blog management system. 
 ## Key Features
 - **Responsive User Interface:** A mobile-first design optimized for all screen sizes.
 - **Role-Based Dashboards:** Distinct user interfaces for General Users, Moderators, and Admins to manage their specific tasks.
-- **Author Public Profiles:** Dedicated public pages showcasing an author's articles, join date, and reading analytics (views, upvotes).
+- **Author Public Profiles:** Dedicated public pages showcasing an author's blogs, follower counts, and overall reading analytics.
+- **Following & Connections:** Follow your favorite authors, view your follower lists seamlessly in a modal, and curate a customized "Following" blog feed.
 - **Dynamic Content Rendering:** Real-time updates for blog feeds, upvote/downvote counts, and community reviews.
 - **Interactive Forms:** Streamlined processes for adding and editing blogs with live tag suggestions and image previews.
 - **Theme Customization:** Integrated Dark and Light mode toggle with persistent user preference.

@@ -500,7 +500,7 @@ export default function BlogDetails() {
                     id="review"
                     name="review"
                     rows="4"
-                    placeholder="Share your thoughts about this article..."
+                    placeholder="Share your thoughts about this blog..."
                     className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:focus:border-white dark:focus:ring-white"
                     required
                   ></textarea>
