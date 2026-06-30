@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import useAuth from "../../hooks/useAuth";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaUser, FaUsersCog, FaBookmark } from "react-icons/fa";
+import { FaUser, FaUsersCog, FaBookmark, FaChartPie } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
 import { MdLibraryAddCheck, MdRateReview, MdHistory } from "react-icons/md";
 import { AiFillProduct } from "react-icons/ai";
@@ -51,9 +51,6 @@ export default function Sidebar({ toggleSidebar }) {
       <section className="flex h-[calc(100vh-64px)] flex-col justify-between">
         <section className="flex-1 px-4 py-6 overflow-y-auto">
           <div className="flex flex-col gap-2">
-            <div className="mb-2 px-4 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-              Menu
-            </div>
             <NavLink to="my-profile" onClick={handleLinkClick} className={navLinkClasses}>
               <FaUser className="text-lg" /> <span>My Profile</span>
             </NavLink>
@@ -87,6 +84,9 @@ export default function Sidebar({ toggleSidebar }) {
 
             {role === "admin" && (
               <>
+                <NavLink to="platform-analytics" onClick={handleLinkClick} className={navLinkClasses}>
+                  <FaChartPie className="text-lg" /> <span>Platform Analytics</span>
+                </NavLink>
                 <NavLink to="manage-users" onClick={handleLinkClick} className={navLinkClasses}>
                   <FaUsersCog className="text-lg" /> <span>Manage Users</span>
                 </NavLink>

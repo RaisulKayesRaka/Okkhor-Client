@@ -24,6 +24,7 @@ import About from "../pages/About";
 import FAQ from "../pages/FAQ";
 import Analytics from "../pages/Dashboard/User/Analytics";
 import SystemLogs from "../pages/Dashboard/Admin/SystemLogs";
+import AdminAnalytics from "../pages/Dashboard/Admin/AdminAnalytics";
 
 export const router = createBrowserRouter([
   {
@@ -134,6 +135,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <SystemLogs />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "platform-analytics",
+        element: (
+          <AdminRoute>
+            <AdminAnalytics />
           </AdminRoute>
         ),
       },
