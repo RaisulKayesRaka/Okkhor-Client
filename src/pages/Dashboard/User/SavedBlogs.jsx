@@ -86,7 +86,7 @@ export default function SavedBlogs() {
                     <span className="flex items-center gap-1">
                       <BsEye size={14} /> {blog.views || 0}
                     </span>
-                    <span>{new Date(blog.savedAt).toLocaleDateString()}</span>
+                    <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
                   </div>
                   <h3 className="mb-2 line-clamp-2 text-lg font-bold text-gray-900 dark:text-white">
                     <Link to={`/blogs/${blog._id}`} className="hover:underline">

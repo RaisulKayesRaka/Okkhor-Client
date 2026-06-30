@@ -58,7 +58,7 @@ export default function BlogCard({ blog, refetch }) {
             
             <div className="flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-400" title="Published">
               <BsClock size={15} />
-              <span>{blog?.date ? formatDistanceToNow(new Date(blog.date), { addSuffix: true }) : ''}</span>
+              <span>{blog?.createdAt ? formatDistanceToNow(new Date(blog.createdAt), { addSuffix: true }) : ''}</span>
             </div>
           </div>
         </div>

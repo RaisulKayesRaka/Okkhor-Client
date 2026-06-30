@@ -70,7 +70,7 @@ export default function AddBlog() {
       isReported: false,
       upvotes: 0,
       downvotes: 0,
-      date: new Date().toISOString(),
+      // date is auto-managed by Mongoose
     };
 
     try {

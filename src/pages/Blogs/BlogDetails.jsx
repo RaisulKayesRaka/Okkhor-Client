@@ -117,7 +117,7 @@ export default function BlogDetails() {
         reviewerName: user?.displayName,
         reviewerImage: user?.photoURL,
         review,
-        reviewDate: new Date().toISOString(),
+        // reviewDate is no longer sent manually as createdAt handles it
       };
 
       const { data } = await axiosSecure.post("/reviews", newReview);
@@ -332,7 +332,7 @@ export default function BlogDetails() {
               </div>
             )}
             <span className="flex items-center gap-1"><BsEye size={16} /> {blog?.views || 0}</span>
-            <span>{new Date(blog?.date).toLocaleDateString()}</span>
+              <span>{new Date(blog?.createdAt).toLocaleDateString()}</span>
           </div>
         </header>
 
@@ -444,7 +444,7 @@ export default function BlogDetails() {
                       />
                       <div>
                         <h4 className="font-semibold text-gray-900 dark:text-white">{review?.reviewerName}</h4>
-                        <p className="text-xs text-gray-500">{new Date(review.reviewDate).toLocaleDateString()}</p>
+                        <p className="text-xs text-gray-500">{new Date(review.createdAt).toLocaleDateString()}</p>
                       </div>
                     </div>
                     {user?.email === review?.reviewerEmail && (

@@ -51,7 +51,7 @@ export default function SystemLogs() {
                     className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-900/50"
                   >
                     <td className="whitespace-nowrap px-6 py-4">
-                      {new Date(log.timestamp).toLocaleString()}
+                      {new Date(log.createdAt).toLocaleString()}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <span className="inline-flex rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/20 dark:text-blue-400">
