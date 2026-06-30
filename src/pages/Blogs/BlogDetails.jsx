@@ -356,7 +356,6 @@ export default function BlogDetails() {
         <div className="mb-12 flex flex-wrap items-center justify-between gap-4 border-y border-gray-100 py-4 dark:border-gray-800">
           <div className="flex flex-wrap items-center gap-2">
             <button
-              disabled={user?.email === blog?.ownerId?.email}
               onClick={handleUpvote}
               className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all ${isUpvoted
                 ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400"
@@ -370,7 +369,6 @@ export default function BlogDetails() {
             <div className="h-6 w-px bg-gray-200 dark:bg-gray-700 mx-1 hidden sm:block"></div>
 
             <button
-              disabled={user?.email === blog?.ownerId?.email}
               onClick={handleDownvote}
               className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all ${isDownvoted
                 ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400"
