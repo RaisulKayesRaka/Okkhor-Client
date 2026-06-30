@@ -12,7 +12,7 @@ export default function FeaturedBlogs() {
   const axiosPublic = useAxiosPublic();
 
   const {
-    data: featuredBlogs,
+    data: featuredBlogs = [],
     isLoading,
     refetch,
   } = useQuery({

@@ -7,7 +7,7 @@ export default function TrendingBlogs() {
   const axiosPublic = useAxiosPublic();
 
   const {
-    data: trendingBlogs,
+    data: trendingBlogs = [],
     isLoading,
     refetch,
   } = useQuery({

@@ -7,7 +7,7 @@ export default function RecentBlogs() {
   const axiosPublic = useAxiosPublic();
 
   const {
-    data: recentBlogs,
+    data: recentBlogs = [],
     isLoading,
     refetch,
   } = useQuery({
