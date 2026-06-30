@@ -32,6 +32,17 @@ export default function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [open]);
+
   return (
     <>
       <nav className="sticky top-0 z-50 border-b bg-white py-5 dark:border-gray-700 dark:bg-black">
@@ -41,14 +52,14 @@ export default function Navbar() {
               (theme === "system" &&
                 window.matchMedia("(prefers-color-scheme: dark)").matches) ? (
               <img
-                onClick={() => navigate("/")}
+                onClick={() => { setOpen(false); navigate("/"); }}
                 className="h-9 w-9 cursor-pointer"
                 src="/okkhor-white.png"
                 alt="Okkhor Logo"
               />
             ) : (
               <img
-                onClick={() => navigate("/")}
+                onClick={() => { setOpen(false); navigate("/"); }}
                 className="h-9 w-9 cursor-pointer"
                 src="/okkhor.png"
                 alt="Okkhor Logo"
@@ -56,7 +67,7 @@ export default function Navbar() {
             )}
 
             <h3
-              onClick={() => navigate("/")}
+              onClick={() => { setOpen(false); navigate("/"); }}
               className="cursor-pointer text-3xl font-semibold"
             >
               Okkhor
@@ -152,18 +163,21 @@ export default function Navbar() {
             </button>
           </section>
           <section
-            className={`fixed left-0 top-0 z-[100] block h-screen w-full bg-white transition-all duration-500 ease-in-out dark:bg-black sm:hidden ${open ? "translate-y-0 opacity-100 visible" : "-translate-y-full opacity-0 invisible"
-              }`}
+            className={`fixed inset-0 z-[100] block h-[100dvh] w-full overflow-y-auto bg-white transition-all duration-300 ease-in-out dark:bg-black sm:hidden ${
+              open ? "translate-y-0 opacity-100 visible" : "-translate-y-full opacity-0 invisible"
+            }`}
           >
-            <div className="flex h-full flex-col p-6">
-              <button
-                onClick={() => setOpen(false)}
-                className="absolute right-6 top-6 text-3xl"
-                aria-label="Close Menu"
-              >
-                <IoCloseOutline />
-              </button>
-              <div className="mt-12 flex-1 text-center">
+            <div className="flex min-h-full flex-col p-6">
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setOpen(false)}
+                  className="text-3xl"
+                  aria-label="Close Menu"
+                >
+                  <IoCloseOutline />
+                </button>
+              </div>
+              <div className="mt-8 flex-1 text-center">
                 <NavLink
                   to="/"
                   onClick={() => setOpen(false)}
