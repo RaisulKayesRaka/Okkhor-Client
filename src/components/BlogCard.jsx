@@ -39,7 +39,7 @@ export default function BlogCard({ blog, refetch }) {
         <div className="flex-1" />
 
         <div className="mt-4 flex items-center justify-between border-t pt-4 dark:border-gray-800">
-          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+          <Link to={`/author/${blog?.ownerId?._id}`} className="flex items-center gap-2 text-sm text-gray-500 hover:opacity-80 dark:text-gray-400">
             <p title={blog?.ownerId?.name}>
               <img
                 className="h-8 w-8 rounded-full object-cover ring-2 ring-gray-100 dark:ring-gray-800"
@@ -47,8 +47,8 @@ export default function BlogCard({ blog, refetch }) {
                 alt={blog?.ownerId?.name}
               />
             </p>
-            <span className="font-medium text-gray-700 dark:text-gray-300">{blog?.ownerId?.name}</span>
-          </div>
+            <span className="font-medium text-gray-700 hover:underline dark:text-gray-300">{blog?.ownerId?.name}</span>
+          </Link>
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-400" title="Views">

@@ -13,7 +13,7 @@ import {
 import { FaPen } from "react-icons/fa";
 import { GoReport } from "react-icons/go";
 import { IoClose } from "react-icons/io5";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
@@ -324,12 +324,12 @@ export default function BlogDetails() {
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
             {blog?.ownerId && (
-              <div className="flex items-center gap-2">
+              <Link to={`/author/${blog?.ownerId?._id}`} className="flex items-center gap-2 hover:opacity-80">
                 {blog?.ownerId?.photoUrl && (
                   <img src={blog.ownerId.photoUrl} alt={blog.ownerId.name} className="h-8 w-8 rounded-full object-cover" />
                 )}
-                <span className="font-medium text-gray-900 dark:text-gray-200">{blog.ownerId.name}</span>
-              </div>
+                <span className="font-medium text-gray-900 hover:underline dark:text-gray-200">{blog.ownerId.name}</span>
+              </Link>
             )}
             <span className="flex items-center gap-1"><BsEye size={16} /> {blog?.views || 0}</span>
               <span>{new Date(blog?.createdAt).toLocaleDateString()}</span>
@@ -434,7 +434,7 @@ export default function BlogDetails() {
               reviews.map((review) => (
                 <div key={review._id} className="group relative rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
                   <div className="mb-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                    <Link to={`/author/${review?.reviewerId}`} className="flex items-center gap-3">
                       <img
                         src={review?.reviewerImage}
                         className="h-10 w-10 rounded-full object-cover ring-2 ring-gray-50 dark:ring-gray-800"
@@ -444,7 +444,7 @@ export default function BlogDetails() {
                         <h4 className="font-semibold text-gray-900 dark:text-white">{review?.reviewerName}</h4>
                         <p className="text-xs text-gray-500">{new Date(review.createdAt).toLocaleDateString()}</p>
                       </div>
-                    </div>
+                    </Link>
                     {user?.email === review?.reviewerEmail && (
                       <div className="flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
                         <button
