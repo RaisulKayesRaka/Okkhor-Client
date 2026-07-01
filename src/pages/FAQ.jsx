@@ -24,27 +24,32 @@ export default function FAQ() {
       answer: "Blog approval typically takes 1-2 business days.",
     },
   ];
-
   return (
     <div className="mx-auto my-12 w-11/12 max-w-screen-xl">
+      {" "}
       <h1 className="mb-10 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-        Frequently Asked Questions
-      </h1>
+        {" "}
+        Frequently Asked Questions{" "}
+      </h1>{" "}
       <div className="space-y-6">
+        {" "}
         {faqs.map((faq, index) => (
           <div
             key={index}
-            className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+            className="rounded-xl border border-gray-200 bg-white p-6 transition dark:border-gray-800 dark:bg-gray-900"
           >
+            {" "}
             <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-              {faq.question}
-            </h2>
+              {" "}
+              {faq.question}{" "}
+            </h2>{" "}
             <p className="mt-3 text-gray-600 dark:text-gray-400">
-              {faq.answer}
-            </p>
+              {" "}
+              {faq.answer}{" "}
+            </p>{" "}
           </div>
-        ))}
-      </div>
+        ))}{" "}
+      </div>{" "}
     </div>
   );
 }

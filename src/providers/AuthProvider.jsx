@@ -17,10 +17,8 @@ import {
 import { app } from "../../firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
-
 export const AuthContext = createContext();
 const auth = getAuth(app);
-
 export default function AuthProvider({ children }) {
   const axiosPublic = useAxiosPublic();
   const [user, setUser] = useState(null);
@@ -41,30 +39,27 @@ export default function AuthProvider({ children }) {
   const updateUserProfile = (updatedData) => {
     return updateProfile(auth.currentUser, updatedData);
   };
-  
   const updateUserPassword = (newPassword) => {
     return updatePassword(auth.currentUser, newPassword);
   };
-
   const reauthenticateUser = (oldPassword) => {
-    const credential = EmailAuthProvider.credential(auth.currentUser.email, oldPassword);
+    const credential = EmailAuthProvider.credential(
+      auth.currentUser.email,
+      oldPassword,
+    );
     return reauthenticateWithCredential(auth.currentUser, credential);
   };
-
   const resetPassword = (email) => {
     return sendPasswordResetEmail(auth, email);
   };
-
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
   };
-
   const deleteUserProfile = () => {
     setLoading(true);
     return deleteUser(auth.currentUser);
   };
-
   const authInfo = {
     user,
     setUser,
@@ -80,7 +75,6 @@ export default function AuthProvider({ children }) {
     loading,
     setLoading,
   };
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
@@ -103,7 +97,4 @@ export default function AuthProvider({ children }) {
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 }
-
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+AuthProvider.propTypes = { children: PropTypes.node.isRequired };

@@ -1,7 +1,6 @@
 import useAuth from "./useAuth";
 import useAxiosSecure from "./useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-
 export default function useRole() {
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useAuth();

@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { WithContext as ReactTags } from "react-tag-input";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import toast from "react-hot-toast";
-import Loading from "../../../components/Loading";
-import { Helmet } from "react-helmet-async";
-import DashboardPageHeader from "../../../components/Dashboard/DashboardPageHeader";
-import DashboardCard from "../../../components/Dashboard/DashboardCard";
+import { useState } from"react";
+import { WithContext as ReactTags } from"react-tag-input";
+import useAuth from"../../../hooks/useAuth";
+import useAxiosSecure from"../../../hooks/useAxiosSecure";
+import toast from"react-hot-toast";
+import Loading from"../../../components/Loading";
+import { Helmet } from"react-helmet-async";
+import DashboardPageHeader from"../../../components/Dashboard/DashboardPageHeader";
+import DashboardCard from"../../../components/Dashboard/DashboardCard";
 
 export default function AddBlog() {
   const axiosSecure = useAxiosSecure();
@@ -38,7 +38,7 @@ export default function AddBlog() {
   };
 
   const handleTagClick = (index) => {
-    console.log("The tag at index " + index + " was clicked");
+    console.log("The tag at index" + index +" was clicked");
   };
 
   const onClearAll = () => {
@@ -55,8 +55,8 @@ export default function AddBlog() {
     const ownerName = user?.displayName;
     const ownerImage = user?.photoURL;
     const ownerEmail = user?.email;
-    const type = "Normal";
-    const status = "Pending";
+    const type ="Normal";
+    const status ="Pending";
     const blogData = {
       blogName,
       blogImage: blogImageUrl,
@@ -116,7 +116,7 @@ export default function AddBlog() {
                       type="text"
                       name="blogName"
                       id="blogName"
-                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       placeholder="Enter blog title"
                       required
                     />
@@ -130,7 +130,7 @@ export default function AddBlog() {
                       type="url"
                       name="blogImage"
                       id="blogImage"
-                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       placeholder="https://example.com/image.jpg"
                       required
                     />
@@ -144,7 +144,7 @@ export default function AddBlog() {
                       name="blogDescription"
                       id="blogDescription"
                       placeholder="Write your content here..."
-                      className="block min-h-[150px] w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block min-h-[150px] w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       required
                     ></textarea>
                   </div>
@@ -174,19 +174,17 @@ export default function AddBlog() {
                       maxTags={7}
                       allowAdditionFromPaste
                       classNames={{
-                        tagInput: "flex item-center justify-center gap-4",
-                        tagInputField:
-                          "w-full flex-1 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-700 dark:bg-gray-900 dark:text-white",
-                        clearAll:
-                          "bg-black dark:bg-white text-white dark:text-black text-xs font-semibold px-3 py-2 rounded-lg hover:opacity-80 transition ml-2",
-                        selected: "mt-3 flex items-center gap-2 flex-wrap",
-                        tag: "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm px-3 py-1 rounded-full cursor-pointer border border-gray-200 dark:border-gray-700",
-                        remove: "ml-2 text-gray-500 hover:text-red-500",
+                        tagInput:"flex item-center justify-center gap-4",
+                        tagInputField:"w-full flex-1 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white",
+                        clearAll:"bg-black dark:bg-white text-white dark:text-black text-xs font-semibold px-3 py-2 rounded-lg hover:opacity-80 transition ml-2",
+                        selected:"mt-3 flex items-center gap-2 flex-wrap",
+                        tag:"bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm px-3 py-1 rounded-full cursor-pointer border border-gray-200 dark:border-gray-800",
+                        remove:"ml-2 text-gray-600 dark:text-gray-400 hover:text-red-500",
                       }}
                     />
                   </div>
 
-                  <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
+                  <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
                     <button
                       type="submit"
                       className="inline-flex w-full items-center justify-center rounded-lg bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"

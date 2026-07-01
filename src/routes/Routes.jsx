@@ -25,92 +25,47 @@ import FAQ from "../pages/FAQ";
 import Analytics from "../pages/Dashboard/User/Analytics";
 import SystemLogs from "../pages/Dashboard/Admin/SystemLogs";
 import AdminAnalytics from "../pages/Dashboard/Admin/AdminAnalytics";
-
+import MyActivity from "../pages/Dashboard/User/MyActivity";
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/faq",
-        element: <FAQ />,
-      },
-      {
-        path: "/blogs",
-        element: <Blogs />,
-      },
-      {
-        path: "/blogs/:id",
-        element: <BlogDetails />,
-      },
-      {
-        path: "/author/:id",
-        element: <PublicProfile />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
+      { path: "/", element: <Home /> },
+      { path: "/about", element: <About /> },
+      { path: "/faq", element: <FAQ /> },
+      { path: "/blogs", element: <Blogs /> },
+      { path: "/blogs/:id", element: <BlogDetails /> },
+      { path: "/author/:id", element: <PublicProfile /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
     ],
   },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
-  },
+  { path: "/forgot-password", element: <ForgotPassword /> },
   {
     path: "/dashboard",
     element: (
       <PrivateRoute>
-        <DashboardLayout />
+        {" "}
+        <DashboardLayout />{" "}
       </PrivateRoute>
     ),
     children: [
-      {
-        index: true,
-        element: <Navigate to="my-profile" replace />,
-      },
-      {
-        path: "my-profile",
-        element: <MyProfile />,
-      },
-      {
-        path: "analytics",
-        element: <Analytics />,
-      },
-      {
-        path: "add-blog",
-        element: <AddBlog />,
-      },
-      {
-        path: "update-blog/:id",
-        element: <UpdateBlog />,
-      },
-      {
-        path: "my-blogs",
-        element: <MyBlogs />,
-      },
-      {
-        path: "saved-blogs",
-        element: <SavedBlogs />,
-      },
+      { index: true, element: <Navigate to="my-profile" replace /> },
+      { path: "my-profile", element: <MyProfile /> },
+      { path: "my-activity", element: <MyActivity /> },
+      { path: "analytics", element: <Analytics /> },
+      { path: "add-blog", element: <AddBlog /> },
+      { path: "update-blog/:id", element: <UpdateBlog /> },
+      { path: "my-blogs", element: <MyBlogs /> },
+      { path: "saved-blogs", element: <SavedBlogs /> },
       {
         path: "blog-review-queue",
         element: (
           <ModeratorRoute>
-            <BlogReviewQueue />
+            {" "}
+            <BlogReviewQueue />{" "}
           </ModeratorRoute>
         ),
       },
@@ -118,7 +73,8 @@ export const router = createBrowserRouter([
         path: "reported-contents",
         element: (
           <ModeratorRoute>
-            <ReportedContents />
+            {" "}
+            <ReportedContents />{" "}
           </ModeratorRoute>
         ),
       },
@@ -126,7 +82,8 @@ export const router = createBrowserRouter([
         path: "manage-users",
         element: (
           <AdminRoute>
-            <ManageUsers />
+            {" "}
+            <ManageUsers />{" "}
           </AdminRoute>
         ),
       },
@@ -134,7 +91,8 @@ export const router = createBrowserRouter([
         path: "system-logs",
         element: (
           <AdminRoute>
-            <SystemLogs />
+            {" "}
+            <SystemLogs />{" "}
           </AdminRoute>
         ),
       },
@@ -142,7 +100,8 @@ export const router = createBrowserRouter([
         path: "platform-analytics",
         element: (
           <AdminRoute>
-            <AdminAnalytics />
+            {" "}
+            <AdminAnalytics />{" "}
           </AdminRoute>
         ),
       },

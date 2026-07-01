@@ -1,42 +1,48 @@
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate, useRouteError } from "react-router-dom";
-
 export default function ErrorPage() {
   const navigate = useNavigate();
   const error = useRouteError();
   const is404 = error?.status === 404;
-
   return (
     <>
+      {" "}
       <Helmet>
-        <title>{is404 ? "404 - Page Not Found" : "Error | Okkhor"}</title>
-      </Helmet>
+        {" "}
+        <title>{is404 ? "404 - Page Not Found" : "Error | Okkhor"}</title>{" "}
+      </Helmet>{" "}
       <section className="mx-auto flex h-screen w-11/12 max-w-screen-xl flex-col items-center justify-center px-4">
+        {" "}
         {is404 ? (
           <img
             onClick={() => navigate("/")}
-            className="w-40 cursor-pointer transition-transform hover:scale-105 sm:w-48 md:w-56"
+            className="w-40 cursor-pointer sm:w-48 md:w-56"
             src="./page-not-found.svg"
             alt="Page Not Found"
           />
         ) : (
-          <div className="text-6xl text-red-500 mb-6">⚠️</div>
-        )}
-        <h1 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl text-center">
-          {is404 ? "Page Not Found" : "Oops! Something went wrong."}
-        </h1>
+          <div className="mb-6 text-6xl text-red-500">⚠️</div>
+        )}{" "}
+        <h1 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+          {" "}
+          {is404 ? "Page Not Found" : "Oops! Something went wrong."}{" "}
+        </h1>{" "}
         <p className="mt-2 text-center text-gray-600 dark:text-gray-400">
+          {" "}
           {is404
             ? "The page you're looking for doesn't exist, has been moved, or is temporarily unavailable."
-            : error?.message || error?.statusText || "An unexpected error has occurred."}
-        </p>
+            : error?.message ||
+              error?.statusText ||
+              "An unexpected error has occurred."}{" "}
+        </p>{" "}
         <Link
           to="/"
           className="mt-8 rounded-xl bg-black px-6 py-3 text-sm font-bold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
         >
-          Back to Home
-        </Link>
-      </section>
+          {" "}
+          Back to Home{" "}
+        </Link>{" "}
+      </section>{" "}
     </>
   );
 }

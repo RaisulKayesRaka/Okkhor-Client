@@ -3,12 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import DashboardPageHeader from "../../../components/Dashboard/DashboardPageHeader";
 import DashboardCard from "../../../components/Dashboard/DashboardCard";
-export default function SystemLogs() {
+import useAuth from "../../../hooks/useAuth";
+export default function MyActivity() {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const { data: logs = [], isLoading } = useQuery({
-    queryKey: ["logs"],
+    queryKey: ["myActivity", user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/logs`);
+      const res = await axiosSecure.get(`/logs/user/${user?.email}`);
       return res?.data;
     },
   });
@@ -25,13 +28,13 @@ export default function SystemLogs() {
       {" "}
       <Helmet>
         {" "}
-        <title>System Logs | Okkhor</title>{" "}
+        <title>My Activity | Okkhor</title>{" "}
       </Helmet>{" "}
       <section className="w-full">
         {" "}
         <DashboardPageHeader
-          title="System Logs"
-          subtitle="View recent system activities and events."
+          title="My Activity"
+          subtitle="A timeline of your recent interactions on Okkhor."
         />{" "}
         <DashboardCard>
           {" "}
@@ -46,7 +49,6 @@ export default function SystemLogs() {
                   <th className="px-6 py-4 font-semibold">Timestamp</th>{" "}
                   <th className="px-6 py-4 font-semibold">Action</th>{" "}
                   <th className="px-6 py-4 font-semibold">Details</th>{" "}
-                  <th className="px-6 py-4 font-semibold">Triggered By</th>{" "}
                 </tr>{" "}
               </thead>{" "}
               <tbody className="divide-y divide-gray-100 bg-white dark:divide-gray-800 dark:bg-black">
@@ -69,23 +71,18 @@ export default function SystemLogs() {
                       </span>{" "}
                     </td>{" "}
                     <td className="px-6 py-4"> {log.details} </td>{" "}
-                    <td className="whitespace-nowrap px-6 py-4">
-                      {" "}
-                      {log.triggeredBy?.name ||
-                        log.triggeredBy?.email ||
-                        "Unknown"}{" "}
-                    </td>{" "}
                   </tr>
                 ))}{" "}
                 {logs.length === 0 && (
                   <tr>
                     {" "}
                     <td
-                      colSpan="4"
+                      colSpan="3"
                       className="px-6 py-8 text-center text-gray-600"
                     >
                       {" "}
-                      No logs found.{" "}
+                      No activity found yet. Start exploring and interacting
+                      with blogs!{" "}
                     </td>{" "}
                   </tr>
                 )}{" "}
