@@ -22,9 +22,9 @@ export default function Footer() {
             {theme === "dark" ||
             (theme === "system" &&
               window.matchMedia("(prefers-color-scheme: dark)").matches) ? (
-              <img src="/okkhor-white.png" alt="Okkhor Logo" className="h-12" />
+              <img src="/okkhor.svg" alt="Okkhor Logo" className="h-12 invert" />
             ) : (
-              <img src="/okkhor.png" alt="Okkhor Logo" className="h-12" />
+              <img src="/okkhor.svg" alt="Okkhor Logo" className="h-12" />
             )}{" "}
             <h2 className="text-2xl font-semibold">Okkhor</h2>{" "}
             <p>

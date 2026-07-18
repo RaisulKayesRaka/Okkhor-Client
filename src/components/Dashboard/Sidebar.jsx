@@ -37,12 +37,12 @@ export default function Sidebar({ toggleSidebar }) {
           (theme === "system" &&
             window.matchMedia("(prefers-color-scheme: dark)").matches) ? (
             <img
-              className="h-8 w-8"
-              src="/okkhor-white.png"
+              className="h-8 w-8 invert"
+              src="/okkhor.svg"
               alt="Okkhor Logo"
             />
           ) : (
-            <img className="h-8 w-8" src="/okkhor.png" alt="Okkhor Logo" />
+            <img className="h-8 w-8" src="/okkhor.svg" alt="Okkhor Logo" />
           )}{" "}
           <span className="text-2xl font-bold tracking-tight">Okkhor</span>{" "}
         </div>{" "}

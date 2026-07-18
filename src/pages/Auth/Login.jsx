@@ -73,15 +73,15 @@ export default function Login() {
             {theme === "dark" ? (
               <img
                 onClick={() => navigate("/")}
-                className="mx-auto mb-4 h-12 w-auto cursor-pointer"
-                src="/okkhor-white.png"
+                className="mx-auto mb-4 h-12 w-auto cursor-pointer invert"
+                src="/okkhor.svg"
                 alt="Okkhor Logo"
               />
             ) : (
               <img
                 onClick={() => navigate("/")}
                 className="mx-auto mb-4 h-12 w-auto cursor-pointer"
-                src="/okkhor.png"
+                src="/okkhor.svg"
                 alt="Okkhor Logo"
               />
             )}{" "}

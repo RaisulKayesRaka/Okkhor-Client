@@ -54,8 +54,8 @@ export default function Navbar() {
                   setOpen(false);
                   navigate("/");
                 }}
-                className="h-9 w-9 cursor-pointer"
-                src="/okkhor-white.png"
+                className="h-9 w-9 cursor-pointer invert"
+                src="/okkhor.svg"
                 alt="Okkhor Logo"
               />
             ) : (
@@ -65,7 +65,7 @@ export default function Navbar() {
                   navigate("/");
                 }}
                 className="h-9 w-9 cursor-pointer"
-                src="/okkhor.png"
+                src="/okkhor.svg"
                 alt="Okkhor Logo"
               />
             )}{" "}
