@@ -121,27 +121,7 @@ export default function MyProfile() {
           subtitle="Manage your personal information and security settings." 
         />
 
-        {/* Analytics Summary */}
-        {analytics && (
-          <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <DashboardCard className="p-6 text-center">
-              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-600 dark:text-gray-400">Total Blogs</h3>
-              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{analytics?.totalBlogs || 0}</p>
-            </DashboardCard>
-            <DashboardCard className="p-6 text-center">
-              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-600 dark:text-gray-400">Upvotes</h3>
-              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{analytics?.totalUpvotes || 0}</p>
-            </DashboardCard>
-            <DashboardCard className="p-6 text-center">
-              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-600 dark:text-gray-400">Downvotes</h3>
-              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{analytics?.totalDownvotes || 0}</p>
-            </DashboardCard>
-            <DashboardCard className="p-6 text-center">
-              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 dark:text-gray-600 dark:text-gray-400">Views</h3>
-              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{analytics?.totalViews || 0}</p>
-            </DashboardCard>
-          </div>
-        )}
+
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Left Column: Profile Card */}

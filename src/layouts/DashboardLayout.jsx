@@ -16,7 +16,7 @@ export default function DashboardLayout() {
         {" "}
         <title>Dashboard | Okkhor</title>{" "}
       </Helmet>{" "}
-      <section className="relative flex min-h-screen bg-white dark:bg-black">
+      <section className="relative flex h-screen overflow-hidden bg-white dark:bg-black">
         {" "}
         {/* Overlay for mobile */}{" "}
         <div
@@ -25,7 +25,7 @@ export default function DashboardLayout() {
         />{" "}
         {/* Sidebar Wrapper */}{" "}
         <div
-          className={`fixed inset-y-0 left-0 z-50 shrink-0 overflow-hidden transition-all duration-300 ease-in-out sm:sticky sm:top-0 sm:h-screen ${isSidebarVisible ? "w-72 translate-x-0" : "w-72 -translate-x-full sm:w-0 sm:translate-x-0"}`}
+          className={`fixed inset-y-0 left-0 z-50 shrink-0 self-start overflow-hidden transition-all duration-300 ease-in-out sm:sticky sm:top-0 sm:h-screen ${isSidebarVisible ? "w-72 translate-x-0" : "w-72 -translate-x-full sm:w-0 sm:translate-x-0"}`}
         >
           {" "}
           <div className="h-full w-72 shrink-0">

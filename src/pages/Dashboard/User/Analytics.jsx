@@ -13,9 +13,11 @@ import {
 } from "recharts";
 import DashboardPageHeader from "../../../components/Dashboard/DashboardPageHeader";
 import DashboardCard from "../../../components/Dashboard/DashboardCard";
+
 export default function Analytics() {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+
   const { data: analytics, isLoading } = useQuery({
     queryKey: ["analytics", user?.email],
     queryFn: async () => {
@@ -24,12 +26,121 @@ export default function Analytics() {
     },
     enabled: !!user?.email,
   });
+
   if (isLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        {" "}
-        <span className="loading loading-spinner loading-lg"></span>{" "}
+        <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
-  } // Format status data for recharts const statusData = analytics?.statusCounts ? Object.keys(analytics.statusCounts).map((status) => ({ name: status, count: analytics.statusCounts[status], })) : []; return ( <> <Helmet> <title>Analytics | Okkhor</title> </Helmet> <section className="w-full"> <DashboardPageHeader title="Author Analytics" subtitle="View your blog performance and statistics." /> {/* Stats Grid */} <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"> <DashboardCard className="p-6"> <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Blogs</h3> <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{analytics?.totalBlogs || 0}</p> </DashboardCard> <DashboardCard className="p-6"> <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Upvotes</h3> <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{analytics?.totalUpvotes || 0}</p> </DashboardCard> <DashboardCard className="p-6"> <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Downvotes</h3> <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{analytics?.totalDownvotes || 0}</p> </DashboardCard> <DashboardCard className="p-6"> <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Views</h3> <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{analytics?.totalViews || 0}</p> </DashboardCard> </div> {/* Chart */} <DashboardCard className="p-6"> <h3 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">Blogs by Status</h3> <div className="h-80 w-full"> <ResponsiveContainer width="100%" height="100%"> <BarChart data={statusData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} > <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#374151" opacity={0.2} /> <XAxis dataKey="name" tick={{fill: '#6B7280'}} axisLine={false} tickLine={false} /> <YAxis tick={{fill: '#6B7280'}} axisLine={false} tickLine={false} /> <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} cursor={{fill: '#f3f4f6'}} /> <Bar dataKey="count" fill="#8884d8" radius={[4, 4, 0, 0]} barSize={40} /> </BarChart> </ResponsiveContainer> </div> </DashboardCard> </section> </> );
+  }
+
+  // Format status data for recharts
+  const statusData = analytics?.statusCounts
+    ? Object.keys(analytics.statusCounts).map((status) => ({
+        name: status,
+        count: analytics.statusCounts[status],
+      }))
+    : [];
+
+  return (
+    <>
+      <Helmet>
+        <title>Analytics | Okkhor</title>
+      </Helmet>
+      <section className="w-full">
+        <DashboardPageHeader
+          title="Author Analytics"
+          subtitle="View your blog performance and statistics."
+        />
+        {/* Stats Grid */}
+        <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <DashboardCard className="p-6">
+            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              Total Blogs
+            </h3>
+            <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+              {analytics?.totalBlogs || 0}
+            </p>
+          </DashboardCard>
+          <DashboardCard className="p-6">
+            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              Total Upvotes
+            </h3>
+            <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+              {analytics?.totalUpvotes || 0}
+            </p>
+          </DashboardCard>
+          <DashboardCard className="p-6">
+            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              Total Downvotes
+            </h3>
+            <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+              {analytics?.totalDownvotes || 0}
+            </p>
+          </DashboardCard>
+          <DashboardCard className="p-6">
+            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              Total Views
+            </h3>
+            <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+              {analytics?.totalViews || 0}
+            </p>
+          </DashboardCard>
+        </div>
+        {/* Chart */}
+        <DashboardCard className="p-6">
+          <h3 className="mb-6 text-lg font-semibold text-gray-900 dark:text-white">
+            Blogs by Status
+          </h3>
+          <div className="h-80 w-full">
+            {statusData && statusData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={statusData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    stroke="#374151"
+                    opacity={0.2}
+                  />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fill: "#6B7280" }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tick={{ fill: "#6B7280" }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      borderRadius: "8px",
+                      border: "none",
+                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                    }}
+                    cursor={{ fill: "#f3f4f6" }}
+                  />
+                  <Bar
+                    dataKey="count"
+                    fill="#8884d8"
+                    radius={[4, 4, 0, 0]}
+                    barSize={40}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="flex h-full items-center justify-center">
+                <p className="text-gray-500">No chart data available</p>
+              </div>
+            )}
+          </div>
+        </DashboardCard>
+      </section>
+    </>
+  );
 }
