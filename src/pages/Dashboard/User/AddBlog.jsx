@@ -109,42 +109,42 @@ export default function AddBlog() {
               <DashboardCard className="p-6">
                 <div className="space-y-6">
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
+                    <label htmlFor="blogName" className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
                       Blog Name
                     </label>
                     <input
                       type="text"
                       name="blogName"
                       id="blogName"
-                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block w-full rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       placeholder="Enter blog title"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
+                    <label htmlFor="blogImage" className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
                       Blog Image URL
                     </label>
                     <input
                       type="url"
                       name="blogImage"
                       id="blogImage"
-                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block w-full rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       placeholder="https://example.com/image.jpg"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
+                    <label htmlFor="blogDescription" className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
                       Description
                     </label>
                     <textarea
                       name="blogDescription"
                       id="blogDescription"
                       placeholder="Write your content here..."
-                      className="block min-h-[150px] w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block min-h-[150px] w-full rounded-[1.5rem] border border-gray-200/50 bg-gray-50 px-5 py-4 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       required
                     ></textarea>
                   </div>
@@ -157,37 +157,40 @@ export default function AddBlog() {
               <DashboardCard className="p-6">
                 <div className="space-y-6">
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
-                      Tags
+                    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                    <label className="block">
+                      <span className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
+                        Tags
+                      </span>
+                      <ReactTags
+                        tags={tags}
+                        inputFieldPosition="top"
+                        handleDelete={handleDelete}
+                        handleAddition={handleAddition}
+                        handleDrag={handleDrag}
+                        handleTagClick={handleTagClick}
+                        onTagUpdate={onTagUpdate}
+                        editable
+                        clearAll
+                        onClearAll={onClearAll}
+                        maxTags={7}
+                        allowAdditionFromPaste
+                        classNames={{
+                          tagInput:"flex item-center justify-center gap-4",
+                          tagInputField:"w-full flex-1 rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white",
+                          clearAll:"bg-black dark:bg-green-500 text-white dark:text-white text-xs font-semibold px-4 py-2 rounded-full hover:opacity-80 transition ml-2",
+                          selected:"mt-3 flex items-center gap-2 flex-wrap",
+                          tag:"bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm px-3 py-1 rounded-full cursor-pointer border border-gray-200 dark:border-gray-800",
+                          remove:"ml-2 text-gray-600 dark:text-gray-400 hover:text-red-500",
+                        }}
+                      />
                     </label>
-                    <ReactTags
-                      tags={tags}
-                      inputFieldPosition="top"
-                      handleDelete={handleDelete}
-                      handleAddition={handleAddition}
-                      handleDrag={handleDrag}
-                      handleTagClick={handleTagClick}
-                      onTagUpdate={onTagUpdate}
-                      editable
-                      clearAll
-                      onClearAll={onClearAll}
-                      maxTags={7}
-                      allowAdditionFromPaste
-                      classNames={{
-                        tagInput:"flex item-center justify-center gap-4",
-                        tagInputField:"w-full flex-1 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white",
-                        clearAll:"bg-black dark:bg-white text-white dark:text-black text-xs font-semibold px-3 py-2 rounded-lg hover:opacity-80 transition ml-2",
-                        selected:"mt-3 flex items-center gap-2 flex-wrap",
-                        tag:"bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm px-3 py-1 rounded-full cursor-pointer border border-gray-200 dark:border-gray-800",
-                        remove:"ml-2 text-gray-600 dark:text-gray-400 hover:text-red-500",
-                      }}
-                    />
                   </div>
 
                   <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
                     <button
                       type="submit"
-                      className="inline-flex w-full items-center justify-center rounded-lg bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                      className="inline-flex w-full items-center justify-center rounded-full bg-green-600 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
                     >
                       Publish Blog
                     </button>

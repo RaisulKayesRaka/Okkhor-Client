@@ -37,14 +37,14 @@ export default function BlogReviewQueue() {
               makeFeatured();
               toast.dismiss(t.id);
             }}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             Yes{" "}
           </button>{" "}
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             No{" "}
@@ -72,14 +72,14 @@ export default function BlogReviewQueue() {
               removeFeatured();
               toast.dismiss(t.id);
             }}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             Yes{" "}
           </button>{" "}
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             No{" "}
@@ -107,14 +107,14 @@ export default function BlogReviewQueue() {
               makeAccepted();
               toast.dismiss(t.id);
             }}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             Yes{" "}
           </button>{" "}
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             No{" "}
@@ -142,14 +142,14 @@ export default function BlogReviewQueue() {
               makeRejected();
               toast.dismiss(t.id);
             }}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             Yes{" "}
           </button>{" "}
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             No{" "}
@@ -172,7 +172,7 @@ export default function BlogReviewQueue() {
           subtitle="Review pending blogs and manage content quality."
         />{" "}
         {blogs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
+          <div className="flex flex-col items-center justify-center rounded-[2.5rem] border border-dashed border-gray-200/50 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
             {" "}
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
               {" "}
@@ -219,7 +219,7 @@ export default function BlogReviewQueue() {
                           {" "}
                           <button
                             onClick={() => navigate(`/blogs/${blog?._id}`)}
-                            className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                            className="inline-flex items-center gap-2 rounded-full border border-gray-200/50 bg-white px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                           >
                             {" "}
                             View <FaRectangleList />{" "}
@@ -227,7 +227,7 @@ export default function BlogReviewQueue() {
                           {blog?.type === "Featured" ? (
                             <button
                               onClick={() => handleRemoveFeatured(blog?._id)}
-                              className="inline-flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-1.5 text-xs font-medium text-amber-700 hover:bg-amber-100 dark:bg-amber-900/20 dark:text-amber-400 dark:hover:bg-amber-900/30"
+                              className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 text-xs font-medium text-amber-700 hover:bg-amber-100 dark:bg-amber-900/20 dark:text-amber-400 dark:hover:bg-amber-900/30"
                               title="Remove from Featured"
                             >
                               {" "}
@@ -236,7 +236,7 @@ export default function BlogReviewQueue() {
                           ) : (
                             <button
                               onClick={() => handleMakeFeatured(blog?._id)}
-                              className="inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100 disabled:opacity-50 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/30"
+                              className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-xs font-medium text-blue-700 hover:bg-blue-100 disabled:opacity-50 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/30"
                             >
                               {" "}
                               Feature <MdFeaturedVideo />{" "}
@@ -244,7 +244,7 @@ export default function BlogReviewQueue() {
                           )}{" "}
                           <button
                             onClick={() => handleMakeAccepted(blog?._id)}
-                            className="inline-flex items-center gap-2 rounded-lg bg-green-50 px-3 py-1.5 text-xs font-medium text-green-700 hover:bg-green-100 disabled:opacity-50 dark:bg-green-900/20 dark:text-green-400 dark:hover:bg-green-900/30"
+                            className="inline-flex items-center gap-2 rounded-full bg-green-50 px-4 py-2 text-xs font-medium text-green-700 hover:bg-green-100 disabled:opacity-50 dark:bg-green-900/20 dark:text-green-400 dark:hover:bg-green-900/30"
                             disabled={blog?.status === "Accepted"}
                           >
                             {" "}
@@ -252,7 +252,7 @@ export default function BlogReviewQueue() {
                           </button>{" "}
                           <button
                             onClick={() => handleMakeRejected(blog?._id)}
-                            className="inline-flex items-center gap-2 rounded-lg bg-red-50 px-3 py-1.5 text-xs font-medium text-red-700 hover:bg-red-100 disabled:opacity-50 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30"
+                            className="inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-medium text-red-700 hover:bg-red-100 disabled:opacity-50 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30"
                             disabled={blog?.status === "Rejected"}
                           >
                             {" "}

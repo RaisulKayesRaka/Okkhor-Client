@@ -124,7 +124,7 @@ export default function UpdateBlog() {
                       name="blogName"
                       id="blogName"
                       defaultValue={blog?.blogName}
-                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block w-full rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       placeholder="Enter blog title"
                       required
                       onChange={(e) => {
@@ -143,7 +143,7 @@ export default function UpdateBlog() {
                       name="blogImage"
                       id="blogImage"
                       defaultValue={blog?.blogImage}
-                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block w-full rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       placeholder="https://example.com/image.jpg"
                     />{" "}
                   </div>{" "}
@@ -158,7 +158,7 @@ export default function UpdateBlog() {
                       id="blogDescription"
                       placeholder="Write your content here..."
                       defaultValue={blog?.blogDescription}
-                      className="block min-h-[150px] w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block min-h-[150px] w-full rounded-[1.5rem] border border-gray-200/50 bg-gray-50 px-5 py-4 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       required
                       onChange={(e) => {
                         blog.blogDescription = e.target.value;
@@ -197,9 +197,9 @@ export default function UpdateBlog() {
                       classNames={{
                         tagInput: "flex item-center justify-center gap-4",
                         tagInputField:
-                          "w-full flex-1 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white",
+                          "w-full flex-1 rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white",
                         clearAll:
-                          "bg-black dark:bg-white text-white dark:text-black text-xs font-semibold px-3 py-2 rounded-lg hover:opacity-80 transition ml-2",
+                          "bg-black dark:bg-green-500 text-white dark:text-white text-xs font-semibold px-4 py-2 rounded-full hover:opacity-80 transition ml-2",
                         selected: "mt-3 flex items-center gap-2 flex-wrap",
                         tag: "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-sm px-3 py-1 rounded-full cursor-pointer border border-gray-200 dark:border-gray-800",
                         remove: "ml-2 text-gray-600 hover:text-red-500",
@@ -210,7 +210,7 @@ export default function UpdateBlog() {
                     {" "}
                     <button
                       type="submit"
-                      className="inline-flex w-full items-center justify-center rounded-lg bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                      className="inline-flex w-full items-center justify-center rounded-full bg-green-600 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
                     >
                       {" "}
                       Update Blog{" "}

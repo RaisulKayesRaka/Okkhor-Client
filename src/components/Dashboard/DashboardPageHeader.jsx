@@ -3,7 +3,7 @@ export default function DashboardPageHeader({ title, subtitle }) {
   return (
     <div className="mb-8">
       {" "}
-      <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+      <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent dark:from-green-400 dark:to-emerald-300 pb-1">
         {" "}
         {title}{" "}
       </h1>{" "}

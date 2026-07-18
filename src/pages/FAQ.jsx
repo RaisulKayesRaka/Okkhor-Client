@@ -25,31 +25,25 @@ export default function FAQ() {
     },
   ];
   return (
-    <div className="mx-auto my-12 w-11/12 max-w-screen-xl">
-      {" "}
-      <h1 className="mb-10 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-        {" "}
-        Frequently Asked Questions{" "}
-      </h1>{" "}
-      <div className="space-y-6">
-        {" "}
+    <div className="mx-auto my-16 w-11/12 max-w-screen-xl sm:my-24">
+      <h1 className="mb-12 text-center text-4xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent dark:from-green-400 dark:to-emerald-300 sm:text-5xl">
+        Frequently Asked Questions
+      </h1>
+      <div className="mx-auto max-w-4xl space-y-6">
         {faqs.map((faq, index) => (
           <div
             key={index}
-            className="rounded-xl border border-gray-200 bg-white p-6 transition dark:border-gray-800 dark:bg-gray-900"
+            className="rounded-[2rem] border border-gray-200/50 bg-white p-8 transition-colors dark:border-gray-800 dark:bg-gray-900"
           >
-            {" "}
-            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-              {" "}
-              {faq.question}{" "}
-            </h2>{" "}
-            <p className="mt-3 text-gray-600 dark:text-gray-400">
-              {" "}
-              {faq.answer}{" "}
-            </p>{" "}
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              {faq.question}
+            </h2>
+            <p className="mt-4 text-base text-gray-600 dark:text-gray-400 leading-relaxed">
+              {faq.answer}
+            </p>
           </div>
-        ))}{" "}
-      </div>{" "}
+        ))}
+      </div>
     </div>
   );
 }

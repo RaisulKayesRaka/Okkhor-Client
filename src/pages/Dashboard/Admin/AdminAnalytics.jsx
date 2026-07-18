@@ -134,8 +134,9 @@ export default function AdminAnalytics() {
                 contentStyle={{
                   backgroundColor: "#1f2937",
                   color: "#fff",
-                  borderRadius: "8px",
-                  border: "none",
+                  borderRadius: "24px",
+                  border: "1px solid rgba(229,231,235,0.1)",
+                  boxShadow: "none",
                 }}
                 itemStyle={{ color: "#fff" }}
               />{" "}
@@ -196,7 +197,13 @@ export default function AdminAnalytics() {
                     />
                   ))}{" "}
                 </Pie>{" "}
-                <Tooltip /> <Legend />{" "}
+                <Tooltip
+                  contentStyle={{
+                    borderRadius: "24px",
+                    border: "1px solid rgba(229,231,235,0.5)",
+                    boxShadow: "none",
+                  }}
+                /> <Legend />{" "}
               </PieChart>{" "}
             </ResponsiveContainer>{" "}
           </div>{" "}
@@ -232,7 +239,13 @@ export default function AdminAnalytics() {
                     />
                   ))}{" "}
                 </Pie>{" "}
-                <Tooltip /> <Legend />{" "}
+                <Tooltip
+                  contentStyle={{
+                    borderRadius: "24px",
+                    border: "1px solid rgba(229,231,235,0.5)",
+                    boxShadow: "none",
+                  }}
+                /> <Legend />{" "}
               </PieChart>{" "}
             </ResponsiveContainer>{" "}
           </div>{" "}

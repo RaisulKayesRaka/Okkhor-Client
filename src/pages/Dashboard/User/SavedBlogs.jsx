@@ -46,7 +46,7 @@ export default function SavedBlogs() {
           subtitle="Your personal reading list."
         />{" "}
         {savedBlogs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
+          <div className="flex flex-col items-center justify-center rounded-[2.5rem] border border-dashed border-gray-200/50 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
             {" "}
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
               {" "}
@@ -54,11 +54,11 @@ export default function SavedBlogs() {
             </h2>{" "}
             <p className="mt-2 text-gray-600 dark:text-gray-400">
               {" "}
-              You haven't bookmarked any blogs yet.{" "}
+              You haven&apos;t bookmarked any blogs yet.{" "}
             </p>{" "}
             <Link
               to="/blogs"
-              className="mt-6 rounded-lg bg-black px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              className="mt-6 rounded-full bg-green-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
             >
               {" "}
               Explore Blogs{" "}
@@ -81,6 +81,7 @@ export default function SavedBlogs() {
                     onClick={() => handleUnsave(blog._id)}
                     className="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-red-500 backdrop-blur transition hover:bg-red-50 hover:text-red-600 dark:bg-black/70 dark:hover:bg-red-900/50"
                     title="Remove from saved"
+                    aria-label="Remove from saved"
                   >
                     {" "}
                     <BsBookmarkX size={18} />{" "}
@@ -115,7 +116,7 @@ export default function SavedBlogs() {
                   </p>{" "}
                   <Link
                     to={`/blogs/${blog._id}`}
-                    className="mt-auto inline-flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-900 transition hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800"
+                    className="mt-auto inline-flex w-full items-center justify-center rounded-full border border-gray-200/50 bg-white px-5 py-3 text-sm font-semibold text-gray-900 transition hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800"
                   >
                     {" "}
                     Read Blog{" "}

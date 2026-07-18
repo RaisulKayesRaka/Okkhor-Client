@@ -47,7 +47,7 @@ export default function FollowListModal({ isOpen, onClose, title, type, userId }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-      <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white  dark:bg-gray-900 flex flex-col max-h-[80vh]">
+      <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white dark:bg-gray-900 flex flex-col max-h-[80vh]">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-200 p-4 dark:border-gray-800">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white capitalize">
@@ -99,7 +99,7 @@ export default function FollowListModal({ isOpen, onClose, title, type, userId }
                       className={`rounded-full px-4 py-1.5 text-xs font-semibold transition flex-shrink-0 ${
                         u.isFollowing
                           ?"bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
-                          :"bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                          :"bg-green-600 text-white hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
                       }`}
                     >
                       {u.isFollowing ?"Unfollow" :"Follow"}

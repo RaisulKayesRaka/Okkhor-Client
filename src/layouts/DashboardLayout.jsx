@@ -19,7 +19,9 @@ export default function DashboardLayout() {
       <section className="relative flex h-screen overflow-hidden bg-white dark:bg-black">
         {" "}
         {/* Overlay for mobile */}{" "}
-        <div
+        <button
+          type="button"
+          aria-label="Close sidebar"
           onClick={toggleSidebar}
           className={`fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 sm:hidden ${isSidebarVisible ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
         />{" "}

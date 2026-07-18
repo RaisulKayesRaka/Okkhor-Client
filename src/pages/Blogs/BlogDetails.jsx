@@ -320,14 +320,14 @@ export default function BlogDetails() {
   if (isLoading || isLoadingComments) {
     return <Loading />;
   }
+  // eslint-disable-next-line react/prop-types
   const CommentItem = ({ comment, isReply = false }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
     return (
       <div
         className={`relative ${isReply ? "ml-6 mt-4 border-l-2 border-gray-200 pl-4 dark:border-gray-800 sm:ml-10 sm:pl-6" : ""}`}
       >
-        {" "}
-        <div className="group relative rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
+        <div className="group relative rounded-3xl border border-gray-200/50 bg-white p-6 transition-colors dark:border-gray-800 dark:bg-gray-900">
           {" "}
           <div className="mb-4 flex items-center justify-between">
             {" "}
@@ -441,11 +441,10 @@ export default function BlogDetails() {
               </Link>
               );
             })}{" "}
-          </div>{" "}
-          <h1 className="mb-6 text-3xl font-extrabold leading-tight text-gray-900 dark:text-gray-100 sm:text-4xl md:text-5xl">
-            {" "}
-            {blog?.blogName}{" "}
-          </h1>{" "}
+          </div>
+          <h1 className="mb-6 pb-2 text-4xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent dark:from-green-400 dark:to-emerald-300 sm:text-5xl md:text-6xl">
+            {blog?.blogName}
+          </h1>
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
             {" "}
             {blog?.ownerId && (
@@ -472,18 +471,18 @@ export default function BlogDetails() {
             <span>{new Date(blog?.createdAt).toLocaleDateString()}</span>{" "}
             <span className="flex items-center gap-1"><BsBook size={16} /> {readingTime} min read</span>{" "}
           </div>{" "}
-        </header>{" "}
-        {/* Hero Image */}{" "}
-        <div className="mb-10 overflow-hidden rounded-2xl">
-          {" "}
+        </header>
+        
+        {/* Hero Image */}
+        <div className="mb-12 overflow-hidden rounded-[2.5rem] border border-gray-200/50 shadow-none dark:border-gray-800">
           <img
             className="w-full object-cover"
             src={blog?.blogImage}
             alt={blog?.blogName}
-          />{" "}
-        </div>{" "}
+          />
+        </div>
         {/* Content */}{" "}
-        <div className="prose prose-lg prose-gray dark:prose-invert mx-auto mb-12">
+        <div className="prose prose-lg prose-gray dark:prose- mx-auto mb-12">
           {" "}
           <p className="whitespace-pre-wrap text-justify leading-relaxed text-gray-700 dark:text-gray-300">
             {" "}
@@ -555,30 +554,26 @@ export default function BlogDetails() {
             </button>{" "}
             <button
               onClick={() => openAddModal(null)}
-              className="ml-2 flex items-center gap-2 rounded-full bg-black px-5 py-2 text-sm font-semibold text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              className="ml-2 flex items-center gap-2 rounded-full bg-green-600 px-5 py-2 text-sm font-semibold text-white hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
             >
               {" "}
               <FaPen size={14} /> Write Comment{" "}
             </button>{" "}
           </div>{" "}
         </div>{" "}
-        {/* Comments Section */}{" "}
+        {/* Comments Section */}
         <section>
-          {" "}
-          <h3 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white">
-            {" "}
-            Comments{" "}
-            <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-400">
-              {" "}
-              {comments.length}{" "}
-            </span>{" "}
-          </h3>{" "}
+          <h3 className="mb-8 flex items-center gap-3 text-3xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent dark:from-green-400 dark:to-emerald-300">
+            Comments
+            <span className="rounded-full border border-gray-200/50 bg-gray-50 px-3 py-1 text-sm font-bold text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
+              {comments.length}
+            </span>
+          </h3>
           <div className="space-y-6">
             {" "}
             {commentTree.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-gray-200 p-8 text-center text-gray-600 dark:border-gray-800">
-                {" "}
-                No comments yet. Be the first to share your thoughts!{" "}
+              <div className="rounded-[2rem] border border-dashed border-gray-200/50 bg-gray-50/50 p-12 text-center text-gray-600 dark:border-gray-800 dark:bg-gray-900/50">
+                No comments yet. Be the first to share your thoughts!
               </div>
             ) : (
               commentTree.map((comment) => (
@@ -594,8 +589,7 @@ export default function BlogDetails() {
         >
           {" "}
           <div className="flex min-h-full items-center justify-center p-4">
-            {" "}
-            <div className="relative w-full max-w-lg rounded-2xl bg-white p-8 dark:bg-gray-950">
+            <div className="relative w-full max-w-lg rounded-[2.5rem] border border-gray-200/50 bg-white p-10 shadow-2xl dark:border-gray-800 dark:bg-gray-900">
               {" "}
               <button
                 onClick={() => {
@@ -630,13 +624,13 @@ export default function BlogDetails() {
                     name="review"
                     rows="4"
                     placeholder="Share your thoughts about this blog..."
-                    className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:focus:border-white dark:focus:ring-white"
+                    className="w-full rounded-[1.5rem] border border-gray-200 bg-gray-50 px-6 py-4 text-sm transition-colors focus:border-green-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-green-500 dark:border-gray-800 dark:bg-gray-950 dark:focus:border-green-500 dark:focus:ring-green-500"
                     required
-                  ></textarea>{" "}
-                </div>{" "}
+                  ></textarea>
+                </div>
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-black py-3 font-bold text-white hover:scale-[1.02] active:scale-[0.98] dark:bg-white dark:text-black"
+                  className="w-full rounded-full bg-green-600 py-3.5 text-sm font-bold text-white transition-colors hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
                 >
                   {" "}
                   {editingReview

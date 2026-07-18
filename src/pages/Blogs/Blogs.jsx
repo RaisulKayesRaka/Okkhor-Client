@@ -64,76 +64,69 @@ export default function Blogs() {
         <div className="mb-8 flex flex-col items-center justify-between gap-6 sm:flex-row">
           {" "}
           <div>
-            {" "}
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {" "}
-              Discover{" "}
-            </h1>{" "}
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
-              {" "}
-              Explore our latest blogs and updates.{" "}
-            </p>{" "}
+            <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent dark:from-green-400 dark:to-emerald-300 sm:text-4xl">
+              Discover
+            </h1>
+            <p className="mt-2 text-base text-gray-600 dark:text-gray-400">
+              Explore our latest blogs and updates.
+            </p>
             {user && (
-              <div className="mt-4 flex gap-2 rounded-lg bg-gray-100 p-1 dark:bg-gray-800 sm:w-fit">
-                {" "}
+              <div className="mt-6 flex gap-2 rounded-full border border-gray-200/50 bg-gray-100 p-1.5 dark:border-gray-800 dark:bg-gray-900/50 sm:w-fit">
                 <button
-                  onClick={() => {
-                    setFeedType("all");
-                  }}
-                  className={`rounded-md px-4 py-2 text-sm font-medium transition ${feedType === "all" ? "bg-white text-black dark:bg-gray-700 dark:text-white" : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"}`}
+                  onClick={() => setFeedType("all")}
+                  className={`rounded-full px-5 py-2 text-sm font-bold transition-colors ${
+                    feedType === "all"
+                      ? "bg-white text-gray-900 border border-gray-200/50 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                      : "text-gray-600 border border-transparent hover:bg-gray-200/50 dark:text-gray-400 dark:hover:bg-gray-800/50"
+                  }`}
                 >
-                  {" "}
-                  All Blogs{" "}
-                </button>{" "}
+                  All Blogs
+                </button>
                 <button
-                  onClick={() => {
-                    setFeedType("following");
-                  }}
-                  className={`rounded-md px-4 py-2 text-sm font-medium transition ${feedType === "following" ? "bg-white text-black dark:bg-gray-700 dark:text-white" : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"}`}
+                  onClick={() => setFeedType("following")}
+                  className={`rounded-full px-5 py-2 text-sm font-bold transition-colors ${
+                    feedType === "following"
+                      ? "bg-white text-gray-900 border border-gray-200/50 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                      : "text-gray-600 border border-transparent hover:bg-gray-200/50 dark:text-gray-400 dark:hover:bg-gray-800/50"
+                  }`}
                 >
-                  {" "}
-                  Following{" "}
-                </button>{" "}
+                  Following
+                </button>
               </div>
-            )}{" "}
-          </div>{" "}
-          <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
-            {" "}
+            )}
+          </div>
+          <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row items-end pb-1.5">
             <input
               onChange={handleSearch}
               type="text"
               name="search"
               placeholder="Search by title..."
-              className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white sm:w-64"
-            />{" "}
+              className="w-full rounded-full border border-gray-200 bg-white px-6 py-3 text-sm outline-none transition-colors focus:border-green-500 focus:ring-1 focus:ring-green-500 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-green-500 dark:focus:ring-green-500 sm:w-72"
+            />
             <select
               onChange={(e) => setSort(e.target.value)}
               name="sort"
               id="sort"
-              className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white sm:w-auto"
+              className="w-full rounded-full border border-gray-200 bg-white px-6 py-3 text-sm outline-none transition-colors focus:border-green-500 focus:ring-1 focus:ring-green-500 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-green-500 dark:focus:ring-green-500 sm:w-auto"
             >
-              {" "}
-              <option value="newest">Newest</option>{" "}
-              <option value="oldest">Oldest</option>{" "}
-              <option value="popular">Popular</option>{" "}
-            </select>{" "}
-          </div>{" "}
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="popular">Popular</option>
+            </select>
+          </div>
         </div>{" "}
         {isLoading ? (
           <Loading />
         ) : blogs.length === 0 ? (
-          <div className="flex min-h-[40vh] flex-col items-center justify-center rounded-2xl bg-gray-50 p-8 text-center dark:bg-gray-800/50">
-            {" "}
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-              {" "}
-              No blogs found{" "}
-            </h3>{" "}
+          <div className="flex min-h-[40vh] flex-col items-center justify-center rounded-[2.5rem] border border-gray-200/50 bg-gray-50/50 p-12 text-center dark:border-gray-800 dark:bg-gray-800/20">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+              No blogs found
+            </h3>
             <p className="mt-2 text-gray-600 dark:text-gray-400">
-              {" "}
               {feedType === "following"
                 ? "You aren't following anyone yet, or they haven't published anything!"
-                : "Try adjusting your search filters."}{" "}
-            </p>{" "}
+                : "Try adjusting your search filters."}
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

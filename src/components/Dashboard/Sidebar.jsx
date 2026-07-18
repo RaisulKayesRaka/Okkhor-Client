@@ -19,14 +19,14 @@ export default function Sidebar({ toggleSidebar }) {
     }
   };
   const navLinkClasses = ({ isActive }) =>
-    `flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-sm transition-all duration-200 ${isActive ? "bg-black font-semibold text-white dark:bg-white dark:text-black" : "text-gray-600 hover:bg-gray-100 hover:text-black dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-white"}`;
+    `flex w-full items-center gap-3 rounded-full px-5 py-3 text-sm transition-all duration-200 ${isActive ? "bg-green-600 font-semibold text-white dark:bg-green-500 dark:text-white" : "text-gray-600 hover:bg-gray-100 hover:text-black dark:text-gray-400 dark:hover:bg-green-700/50 dark:hover:text-white"}`;
   return (
     <aside
       id="sidebar"
-      className="flex h-full w-full flex-col border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-black"
+      className="flex h-full w-full flex-col border-r border-gray-200/50 bg-white dark:border-gray-800 dark:bg-black"
     >
       {" "}
-      <div className="flex h-16 items-center gap-4 border-b border-gray-200 p-4 dark:border-gray-800">
+      <div className="flex h-16 items-center gap-4 border-b border-gray-200/50 p-4 dark:border-gray-800">
         {" "}
         <div
           className="transition- flex cursor-pointer items-center gap-2"
@@ -37,7 +37,7 @@ export default function Sidebar({ toggleSidebar }) {
           (theme === "system" &&
             window.matchMedia("(prefers-color-scheme: dark)").matches) ? (
             <img
-              className="h-8 w-8 invert"
+              className="h-8 w-8"
               src="/okkhor.svg"
               alt="Okkhor Logo"
             />
@@ -167,12 +167,12 @@ export default function Sidebar({ toggleSidebar }) {
             )}{" "}
           </div>{" "}
         </section>{" "}
-        <section className="flex flex-col gap-3 border-t border-gray-200 p-4 dark:border-gray-800">
+        <section className="flex flex-col gap-4 border-t border-gray-200/50 p-6 dark:border-gray-800">
           {" "}
           <div className="flex items-center gap-3">
             {" "}
             <img
-              className="h-10 w-10 rounded-full border border-gray-200 object-cover dark:border-gray-800"
+              className="h-10 w-10 rounded-full border border-gray-200/50 object-cover dark:border-gray-800"
               src={user?.photoURL}
               alt={user?.displayName || "User Profile"}
               referrerPolicy="no-referrer"
@@ -191,7 +191,7 @@ export default function Sidebar({ toggleSidebar }) {
           </div>{" "}
           <button
             onClick={() => logOut()}
-            className="w-full rounded-lg bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 transition-colors hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
+            className="w-full rounded-full bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition-colors hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
           >
             {" "}
             Log out{" "}

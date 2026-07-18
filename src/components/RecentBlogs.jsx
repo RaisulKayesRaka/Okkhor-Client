@@ -24,12 +24,11 @@ export default function RecentBlogs() {
     return null;
   }
   return (
-    <section className="mx-auto my-12 w-11/12 max-w-screen-xl">
+    <section className="mx-auto my-20 w-11/12 max-w-screen-xl">
       {" "}
-      <h2 className="mb-8 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-        {" "}
-        Recent Blogs{" "}
-      </h2>{" "}
+      <h2 className="mb-12 text-center text-3xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent dark:from-green-400 dark:to-emerald-300 sm:text-4xl">
+        Recent Blogs
+      </h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {" "}
         {recentBlogs.map((blog) => (

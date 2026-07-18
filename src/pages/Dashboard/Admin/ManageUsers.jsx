@@ -36,14 +36,14 @@ export default function ManageUsers() {
               makeModerator();
               toast.dismiss(t.id);
             }}
-            className="rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 dark:bg-white dark:text-black"
+            className="rounded-full bg-green-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-green-700 dark:bg-green-500 dark:text-white"
           >
             {" "}
             Yes{" "}
           </button>{" "}
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-semibold hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+            className="rounded-full bg-gray-100 px-6 py-2.5 text-sm font-semibold hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
             {" "}
             No{" "}
@@ -73,14 +73,14 @@ export default function ManageUsers() {
               makeAdmin();
               toast.dismiss(t.id);
             }}
-            className="rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 dark:bg-white dark:text-black"
+            className="rounded-full bg-green-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-green-700 dark:bg-green-500 dark:text-white"
           >
             {" "}
             Yes{" "}
           </button>{" "}
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-semibold hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+            className="rounded-full bg-gray-100 px-6 py-2.5 text-sm font-semibold hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
             {" "}
             No{" "}
@@ -110,14 +110,14 @@ export default function ManageUsers() {
               makeUser();
               toast.dismiss(t.id);
             }}
-            className="rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 dark:bg-white dark:text-black"
+            className="rounded-full bg-green-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-green-700 dark:bg-green-500 dark:text-white"
           >
             {" "}
             Yes{" "}
           </button>{" "}
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-semibold hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+            className="rounded-full bg-gray-100 px-6 py-2.5 text-sm font-semibold hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
             {" "}
             No{" "}
@@ -201,11 +201,11 @@ export default function ManageUsers() {
                       <div className="flex items-center justify-end gap-2">
                         {" "}
                         {/* Role Management */}{" "}
-                        <div className="flex rounded-lg border border-gray-200 bg-white p-1 dark:border-gray-800 dark:bg-gray-900">
+                        <div className="flex rounded-full border border-gray-200/50 bg-white p-1 dark:border-gray-800 dark:bg-gray-900">
                           {" "}
                           <button
                             onClick={() => handleMakeUser(user?._id)}
-                            className="rounded p-1.5 text-gray-600 hover:bg-gray-100 hover:text-black disabled:opacity-30 dark:hover:bg-gray-800 dark:hover:text-white"
+                            className="rounded-full p-2 text-gray-600 hover:bg-gray-100 hover:text-black disabled:opacity-30 dark:hover:bg-gray-800 dark:hover:text-white"
                             disabled={user?.role === "user"}
                             title="Make User"
                           >
@@ -214,7 +214,7 @@ export default function ManageUsers() {
                           </button>{" "}
                           <button
                             onClick={() => handleMakeModerator(user?._id)}
-                            className="rounded p-1.5 text-gray-600 hover:bg-gray-100 hover:text-black disabled:opacity-30 dark:hover:bg-gray-800 dark:hover:text-white"
+                            className="rounded-full p-2 text-gray-600 hover:bg-gray-100 hover:text-black disabled:opacity-30 dark:hover:bg-gray-800 dark:hover:text-white"
                             disabled={user?.role === "moderator"}
                             title="Make Moderator"
                           >
@@ -223,7 +223,7 @@ export default function ManageUsers() {
                           </button>{" "}
                           <button
                             onClick={() => handleMakeAdmin(user?._id)}
-                            className="rounded p-1.5 text-gray-600 hover:bg-gray-100 hover:text-black disabled:opacity-30 dark:hover:bg-gray-800 dark:hover:text-white"
+                            className="rounded-full p-2 text-gray-600 hover:bg-gray-100 hover:text-black disabled:opacity-30 dark:hover:bg-gray-800 dark:hover:text-white"
                             disabled={user?.role === "admin"}
                             title="Make Admin"
                           >

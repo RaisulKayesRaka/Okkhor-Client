@@ -126,9 +126,9 @@ export default function MyProfile() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Left Column: Profile Card */}
           <div className="lg:col-span-1">
-            <DashboardCard className="border-none bg-gray-50 p-8 text-center  dark:bg-gray-900/50">
+            <DashboardCard className="border-none bg-gray-50 p-8 text-center dark:bg-gray-900/50">
               <img
-                className="mx-auto mb-4 h-32 w-32 rounded-full border-4 border-white object-cover  dark:border-gray-800"
+                className="mx-auto mb-4 h-32 w-32 rounded-full border-4 border-white object-cover dark:border-gray-800"
                 src={user?.photoURL}
                 alt={user?.displayName}
                 referrerPolicy="no-referrer"
@@ -141,21 +141,23 @@ export default function MyProfile() {
               </p>
               {analytics && (
                 <div className="mt-6 flex items-center justify-center gap-6 text-sm">
-                  <div 
+                  <button 
+                    type="button"
                     className="flex flex-col items-center cursor-pointer transition-"
                     onClick={() => { setModalType("followers"); setIsModalOpen(true); }}
                   >
                     <span className="text-2xl font-bold text-black dark:text-white">{analytics.followersCount || 0}</span>
                     <span className="text-gray-600 dark:text-gray-400 hover:text-black dark:text-gray-600 dark:text-gray-400 dark:hover:text-white transition-colors">Followers</span>
-                  </div>
+                  </button>
                   <div className="h-10 w-px bg-gray-300 dark:bg-gray-700"></div>
-                  <div 
+                  <button 
+                    type="button"
                     className="flex flex-col items-center cursor-pointer transition-"
                     onClick={() => { setModalType("following"); setIsModalOpen(true); }}
                   >
                     <span className="text-2xl font-bold text-black dark:text-white">{analytics.followingCount || 0}</span>
                     <span className="text-gray-600 dark:text-gray-400 hover:text-black dark:text-gray-600 dark:text-gray-400 dark:hover:text-white transition-colors">Following</span>
-                  </div>
+                  </button>
                 </div>
               )}
             </DashboardCard>
@@ -168,29 +170,31 @@ export default function MyProfile() {
               <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Edit Profile</h3>
               <form onSubmit={handleUpdate} className="text-left">
                 <div className="mb-4">
-                  <label className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">Name</label>
+                  <label htmlFor="profileName" className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">Name</label>
                   <input
+                    id="profileName"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                    className="block w-full rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                     required
                   />
                 </div>
                 <div className="mb-6">
-                  <label className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">Photo URL</label>
+                  <label htmlFor="profilePhoto" className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">Photo URL</label>
                   <input
+                    id="profilePhoto"
                     type="url"
                     value={photoUrl}
                     onChange={(e) => setPhotoUrl(e.target.value)}
-                    className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                    className="block w-full rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                     required
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="rounded-lg bg-black px-6 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                  className="rounded-full bg-green-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-green-700 disabled:opacity-50 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
                 >
                   {loading ?"Saving..." :"Save Changes"}
                 </button>
@@ -203,24 +207,26 @@ export default function MyProfile() {
                 <h3 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Security</h3>
                 <form onSubmit={handlePasswordChange} className="text-left">
                   <div className="mb-4">
-                    <label className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">Old Password</label>
+                    <label htmlFor="oldPassword" className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">Old Password</label>
                     <input
+                      id="oldPassword"
                       type="password"
                       value={oldPassword}
                       onChange={(e) => setOldPassword(e.target.value)}
                       placeholder="Enter current password"
-                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block w-full rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       required
                     />
                   </div>
                   <div className="mb-6">
-                    <label className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">New Password</label>
+                    <label htmlFor="newPassword" className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">New Password</label>
                     <input
+                      id="newPassword"
                       type="password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="Enter new password"
-                      className="block w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block w-full rounded-full border border-gray-200/50 bg-gray-50 px-5 py-3 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       required
                       minLength="6"
                     />
@@ -228,7 +234,7 @@ export default function MyProfile() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="rounded-lg border border-gray-200 bg-white px-6 py-2.5 text-sm font-medium text-gray-900 transition hover:bg-gray-50 disabled:opacity-50 dark:border-gray-800 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+                    className="rounded-full border border-gray-200/50 bg-white px-6 py-3 text-sm font-medium text-gray-900 transition hover:bg-gray-50 disabled:opacity-50 dark:border-gray-800 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
                   >
                     {loading ?"Updating..." :"Update Password"}
                   </button>
@@ -245,7 +251,7 @@ export default function MyProfile() {
               <button
                 onClick={handleDelete}
                 disabled={loading}
-                className="rounded-lg bg-red-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 disabled:opacity-50"
+                className="rounded-full bg-red-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-red-700 disabled:opacity-50"
               >
                 Delete Account
               </button>

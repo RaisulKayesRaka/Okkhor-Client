@@ -38,14 +38,14 @@ export default function MyBlogs() {
               deleteBlog();
               toast.dismiss(t.id);
             }}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             Yes{" "}
           </button>{" "}
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             No{" "}
@@ -68,7 +68,7 @@ export default function MyBlogs() {
           subtitle="Manage your blog posts and track their status."
         />{" "}
         {blogs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
+          <div className="flex flex-col items-center justify-center rounded-[2.5rem] border border-dashed border-gray-200/50 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
             {" "}
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
               {" "}
@@ -80,7 +80,7 @@ export default function MyBlogs() {
             </p>{" "}
             <Link
               to="/dashboard/add-blog"
-              className="mt-6 rounded-lg bg-black px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              className="mt-6 rounded-full bg-green-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
             >
               {" "}
               Write a Blog{" "}
@@ -155,7 +155,7 @@ export default function MyBlogs() {
                             onClick={() =>
                               navigate(`/dashboard/update-blog/${blog?._id}`)
                             }
-                            className="rounded-lg p-2 text-gray-600 transition hover:bg-gray-100 hover:text-black dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+                            className="rounded-full p-2 text-gray-600 transition hover:bg-gray-100 hover:text-black dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
                             title="Update"
                           >
                             {" "}
@@ -163,7 +163,7 @@ export default function MyBlogs() {
                           </button>{" "}
                           <button
                             onClick={() => handleDelete(blog?._id)}
-                            className="rounded-lg p-2 text-gray-600 transition hover:bg-red-50 hover:text-red-600 dark:text-gray-400 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                            className="rounded-full p-2 text-gray-600 transition hover:bg-red-50 hover:text-red-600 dark:text-gray-400 dark:hover:bg-red-900/20 dark:hover:text-red-400"
                             title="Delete"
                           >
                             {" "}

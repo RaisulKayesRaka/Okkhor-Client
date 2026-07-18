@@ -4,6 +4,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "../providers/ThemeProvider";
+
 export default function Navbar() {
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -12,6 +13,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logOut } = useAuth();
   const { theme } = useTheme();
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -27,273 +29,169 @@ export default function Navbar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [open]);
+
+  const navLinkClasses = ({ isActive }) =>
+    `hidden sm:block px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+      isActive
+        ? "bg-green-50 text-green-700 dark:bg-green-500/10 dark:text-green-400 font-bold"
+        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+    }`;
+
   return (
     <>
-      {" "}
-      <nav className="sticky top-0 z-50 border-b bg-white py-5 dark:border-gray-800 dark:bg-black">
-        {" "}
+      <nav className="sticky top-0 z-50 border-b border-gray-200/50 bg-white/70 py-4 backdrop-blur-xl dark:border-gray-800/50 dark:bg-black/70 transition-all">
         <div className="mx-auto flex w-11/12 max-w-screen-xl items-center justify-between">
-          {" "}
-          <section className="flex items-center justify-center gap-2">
-            {" "}
-            {theme === "dark" ||
-            (theme === "system" &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches) ? (
-              <img
-                onClick={() => {
-                  setOpen(false);
-                  navigate("/");
-                }}
-                className="h-9 w-9 cursor-pointer invert"
-                src="/okkhor.svg"
-                alt="Okkhor Logo"
-              />
-            ) : (
-              <img
-                onClick={() => {
-                  setOpen(false);
-                  navigate("/");
-                }}
-                className="h-9 w-9 cursor-pointer"
-                src="/okkhor.svg"
-                alt="Okkhor Logo"
-              />
-            )}{" "}
+          
+          {/* Logo Section */}
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              navigate("/");
+            }}
+            className="flex items-center justify-center gap-3 cursor-pointer focus:outline-none"
+            aria-label="Go to home"
+          >
+            <img
+              className="h-9 w-9"
+              src="/okkhor.svg"
+              alt=""
+            />
             <h3
-              onClick={() => {
-                setOpen(false);
-                navigate("/");
-              }}
-              className="cursor-pointer text-3xl font-semibold"
+              className="text-2xl font-black tracking-tight"
             >
-              {" "}
-              Okkhor{" "}
-            </h3>{" "}
-          </section>{" "}
-          <section className="flex items-center gap-8">
-            {" "}
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                `${isActive ? "font-bold" : ""} hidden sm:block`
-              }
-            >
-              {" "}
-              Home{" "}
-            </NavLink>{" "}
-            <NavLink
-              to="/blogs"
-              className={({ isActive }) =>
-                `${isActive ? "font-bold" : ""} hidden sm:block`
-              }
-            >
-              {" "}
-              Blogs{" "}
-            </NavLink>{" "}
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                `${isActive ? "font-bold" : ""} hidden sm:block`
-              }
-            >
-              {" "}
-              About{" "}
-            </NavLink>{" "}
-            <NavLink
-              to="/faq"
-              className={({ isActive }) =>
-                `${isActive ? "font-bold" : ""} hidden sm:block`
-              }
-            >
-              {" "}
-              FAQ{" "}
-            </NavLink>{" "}
-            <ThemeToggle />{" "}
+              Okkhor<span className="text-green-600 dark:text-green-500">.</span>
+            </h3>
+          </button>
+
+          {/* Nav Links & Actions */}
+          <section className="flex items-center gap-2 sm:gap-4">
+            <div className="hidden sm:flex sm:items-center sm:gap-2 mr-4">
+              <NavLink to="/" className={navLinkClasses}>Home</NavLink>
+              <NavLink to="/blogs" className={navLinkClasses}>Blogs</NavLink>
+              <NavLink to="/about" className={navLinkClasses}>About</NavLink>
+              <NavLink to="/faq" className={navLinkClasses}>FAQ</NavLink>
+            </div>
+            
+            <ThemeToggle />
+            
             {user && user?.email ? (
               <div
                 ref={dropdownButtonRef}
-                onClick={() => setDropdownOpen((prev) => !prev)}
-                className="relative hidden h-9 w-9 cursor-pointer rounded-full sm:block"
+                className="relative hidden sm:block"
               >
-                {" "}
-                <img
-                  className="h-9 w-9 cursor-pointer rounded-full border"
-                  src={user?.photoURL}
-                  alt=""
-                  referrerPolicy="no-referrer"
-                />{" "}
+                <button
+                  type="button"
+                  onClick={() => setDropdownOpen((prev) => !prev)}
+                  className="h-10 w-10 cursor-pointer rounded-full ring-2 ring-transparent transition-all hover:ring-green-500/50 focus:outline-none"
+                  aria-expanded={dropdownOpen}
+                  aria-label="User menu"
+                >
+                  <img
+                    className="h-10 w-10 rounded-full object-cover"
+                    src={user?.photoURL}
+                    alt=""
+                    referrerPolicy="no-referrer"
+                  />
+                </button>
+                
+                {/* Glassmorphism Dropdown */}
                 {dropdownOpen && (
                   <div
                     ref={dropdownRef}
-                    className="absolute right-0 top-12 flex min-w-56 flex-col rounded-lg border bg-white py-2 dark:border-gray-800 dark:bg-black"
+                    className="absolute right-0 top-14 flex min-w-[200px] flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white/90 py-2 backdrop-blur-xl dark:border-gray-800 dark:bg-black/90"
                   >
-                    {" "}
-                    <p className="px-4 py-3 font-semibold">
-                      {" "}
-                      {user?.displayName}{" "}
-                    </p>{" "}
-                    <hr className="dark:border-gray-800" />{" "}
+                    <p className="px-5 py-3 text-sm font-semibold text-gray-900 dark:text-white">
+                      {user?.displayName}
+                    </p>
+                    <div className="h-px w-full bg-gray-100 dark:bg-gray-800" />
                     <Link
                       to="/dashboard"
-                      className="mt-2 px-4 py-2 hover:bg-gray-50 focus:scale-95 dark:hover:bg-gray-900"
+                      className="px-5 py-3 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-green-600 dark:text-gray-300 dark:hover:bg-gray-900/50 dark:hover:text-green-400"
                     >
-                      {" "}
-                      Dashboard{" "}
-                    </Link>{" "}
+                      Dashboard
+                    </Link>
                     <button
                       onClick={logOut}
-                      className="px-4 py-2 text-left hover:bg-gray-50 focus:scale-95 dark:hover:bg-gray-900"
+                      className="px-5 py-3 text-left text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-red-600 dark:text-gray-300 dark:hover:bg-gray-900/50 dark:hover:text-red-400"
                     >
-                      {" "}
-                      Logout{" "}
-                    </button>{" "}
+                      Logout
+                    </button>
                   </div>
-                )}{" "}
+                )}
               </div>
             ) : (
               <NavLink
                 to="/login"
-                className="hidden rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 focus:scale-95 dark:bg-white dark:text-black sm:block"
+                className="hidden rounded-full bg-green-600 px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-400 sm:block"
               >
-                {" "}
-                Login{" "}
+                Login
               </NavLink>
-            )}{" "}
+            )}
+            
             <button
               onClick={() => setOpen(true)}
-              className="text-3xl sm:hidden"
+              className="ml-2 rounded-full p-2 text-2xl text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 sm:hidden"
               aria-label="Open Menu"
             >
-              {" "}
-              <IoMenuOutline />{" "}
-            </button>{" "}
-          </section>{" "}
+              <IoMenuOutline />
+            </button>
+          </section>
+
+          {/* Mobile Fullscreen Menu */}
           <section
-            className={`fixed inset-0 z-[100] block h-[100dvh] w-full overflow-y-auto bg-white transition-all duration-300 ease-in-out dark:bg-black sm:hidden ${open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-full opacity-0"}`}
+            className={`fixed inset-0 z-[100] block h-[100dvh] w-full overflow-y-auto bg-white/95 backdrop-blur-3xl transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] dark:bg-black/95 sm:hidden ${open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-8 opacity-0"}`}
           >
-            {" "}
             <div className="flex min-h-full flex-col p-6">
-              {" "}
               <div className="flex justify-end">
-                {" "}
                 <button
                   onClick={() => setOpen(false)}
-                  className="text-3xl"
+                  className="rounded-full bg-gray-100 p-3 text-2xl text-gray-900 transition-colors dark:bg-gray-900 dark:text-white"
                   aria-label="Close Menu"
                 >
-                  {" "}
-                  <IoCloseOutline />{" "}
-                </button>{" "}
-              </div>{" "}
-              <div className="mt-8 flex-1 text-center">
-                {" "}
-                <NavLink
-                  to="/"
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `${isActive ? "font-bold" : ""} block py-3`
-                  }
-                >
-                  {" "}
-                  Home{" "}
-                </NavLink>{" "}
-                <NavLink
-                  to="/blogs"
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `${isActive ? "font-bold" : ""} block py-3`
-                  }
-                >
-                  {" "}
-                  Blogs{" "}
-                </NavLink>{" "}
-                <NavLink
-                  to="/about"
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `${isActive ? "font-bold" : ""} block py-3`
-                  }
-                >
-                  {" "}
-                  About{" "}
-                </NavLink>{" "}
-                <NavLink
-                  to="/faq"
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `${isActive ? "font-bold" : ""} block py-3`
-                  }
-                >
-                  {" "}
-                  FAQ{" "}
-                </NavLink>{" "}
-              </div>{" "}
-              {user && user?.email ? (
-                <div className="w-full rounded-lg border py-4 dark:border-gray-800">
-                  {" "}
-                  <div className="flex items-center justify-center">
-                    {" "}
-                    <img
-                      className="h-24 w-24 rounded-full"
-                      src={user?.photoURL}
-                      alt=""
-                      referrerPolicy="no-referrer"
-                    />{" "}
-                  </div>{" "}
-                  <div>
-                    {" "}
-                    <p className="px-4 py-3 text-center font-semibold">
-                      {" "}
-                      {user?.displayName}{" "}
-                    </p>{" "}
-                    <hr className="dark:border-gray-800" />{" "}
-                    <div className="flex flex-col">
-                      {" "}
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setOpen(false)}
-                        className="mt-2 px-4 py-2 text-center hover:bg-gray-50 focus:scale-95 dark:hover:bg-gray-900"
-                      >
-                        {" "}
-                        Dashboard{" "}
-                      </Link>{" "}
-                      <button
-                        onClick={() => {
-                          logOut();
-                          setOpen(false);
-                        }}
-                        className="block px-4 py-2 text-center hover:bg-gray-50 focus:scale-95 dark:hover:bg-gray-900"
-                      >
-                        {" "}
-                        Logout{" "}
-                      </button>{" "}
-                    </div>{" "}
-                  </div>{" "}
-                </div>
-              ) : (
-                <NavLink
-                  to="/login"
-                  onClick={() => setOpen(false)}
-                  className="block rounded-lg bg-black px-4 py-2 text-center text-sm font-semibold text-white hover:bg-gray-800 focus:scale-95 dark:bg-white dark:text-black"
-                >
-                  {" "}
-                  Login{" "}
-                </NavLink>
-              )}{" "}
-            </div>{" "}
-          </section>{" "}
-        </div>{" "}
-      </nav>{" "}
+                  <IoCloseOutline />
+                </button>
+              </div>
+              
+              <div className="mt-12 flex flex-1 flex-col items-center gap-6 text-center text-2xl font-semibold">
+                <NavLink to="/" onClick={() => setOpen(false)} className={({ isActive }) => `transition-colors ${isActive ? "text-green-600 dark:text-green-400" : "text-gray-600 dark:text-gray-300"}`}>Home</NavLink>
+                <NavLink to="/blogs" onClick={() => setOpen(false)} className={({ isActive }) => `transition-colors ${isActive ? "text-green-600 dark:text-green-400" : "text-gray-600 dark:text-gray-300"}`}>Blogs</NavLink>
+                <NavLink to="/about" onClick={() => setOpen(false)} className={({ isActive }) => `transition-colors ${isActive ? "text-green-600 dark:text-green-400" : "text-gray-600 dark:text-gray-300"}`}>About</NavLink>
+                <NavLink to="/faq" onClick={() => setOpen(false)} className={({ isActive }) => `transition-colors ${isActive ? "text-green-600 dark:text-green-400" : "text-gray-600 dark:text-gray-300"}`}>FAQ</NavLink>
+              </div>
+              
+              <div className="mt-auto mb-8 w-full">
+                {user && user?.email ? (
+                  <div className="flex flex-col items-center rounded-3xl border border-gray-100 bg-white p-6 dark:border-gray-800 dark:bg-gray-950">
+                    <img className="mb-4 h-20 w-20 rounded-full object-cover ring-4 ring-green-50 dark:ring-green-900/20" src={user?.photoURL} alt="" referrerPolicy="no-referrer" />
+                    <p className="mb-6 text-lg font-bold text-gray-900 dark:text-white">{user?.displayName}</p>
+                    <div className="flex w-full flex-col gap-3">
+                      <Link to="/dashboard" onClick={() => setOpen(false)} className="w-full rounded-2xl bg-gray-50 py-3 text-center font-medium text-gray-900 transition-colors hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800">Dashboard</Link>
+                      <button onClick={() => { logOut(); setOpen(false); }} className="w-full rounded-2xl bg-red-50 py-3 text-center font-medium text-red-600 transition-colors hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-900/30">Logout</button>
+                    </div>
+                  </div>
+                ) : (
+                  <NavLink to="/login" onClick={() => setOpen(false)} className="block w-full rounded-2xl bg-green-600 py-4 text-center text-lg font-bold text-white transition-colors hover:bg-green-700 dark:bg-green-500">Login</NavLink>
+                )}
+              </div>
+            </div>
+          </section>
+        </div>
+      </nav>
     </>
   );
 }

@@ -48,14 +48,14 @@ export default function ReportedContents() {
               deleteBlog();
               toast.dismiss(t.id);
             }}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             Yes{" "}
           </button>{" "}
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-semibold"
+            className="rounded-full bg-gray-100 px-4 py-2 text-sm font-semibold"
           >
             {" "}
             No{" "}
@@ -78,7 +78,7 @@ export default function ReportedContents() {
           subtitle="Review and take action on reported content."
         />{" "}
         {blogs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
+          <div className="flex flex-col items-center justify-center rounded-[2.5rem] border border-dashed border-gray-200/50 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
             {" "}
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
               {" "}
@@ -125,21 +125,21 @@ export default function ReportedContents() {
                           {" "}
                           <button
                             onClick={() => navigate(`/blogs/${blog?._id}`)}
-                            className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                            className="inline-flex items-center gap-2 rounded-full border border-gray-200/50 bg-white px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                           >
                             {" "}
                             View <FaRectangleList />{" "}
                           </button>{" "}
                           <button
                             onClick={() => handleDismiss(blog?._id)}
-                            className="inline-flex items-center gap-2 rounded-lg bg-yellow-50 px-3 py-1.5 text-xs font-medium text-yellow-700 hover:bg-yellow-100 dark:bg-yellow-900/20 dark:text-yellow-400 dark:hover:bg-yellow-900/30"
+                            className="inline-flex items-center gap-2 rounded-full bg-yellow-50 px-4 py-2 text-xs font-medium text-yellow-700 hover:bg-yellow-100 dark:bg-yellow-900/20 dark:text-yellow-400 dark:hover:bg-yellow-900/30"
                           >
                             {" "}
                             Dismiss <MdDoNotDisturb />{" "}
                           </button>{" "}
                           <button
                             onClick={() => handleDelete(blog?._id)}
-                            className="inline-flex items-center gap-2 rounded-lg bg-red-50 px-3 py-1.5 text-xs font-medium text-red-700 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30"
+                            className="inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-medium text-red-700 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30"
                           >
                             {" "}
                             Delete <MdDelete />{" "}

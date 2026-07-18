@@ -119,9 +119,9 @@ export default function Analytics() {
                   />
                   <Tooltip
                     contentStyle={{
-                      borderRadius: "8px",
-                      border: "none",
-                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                      borderRadius: "24px",
+                      border: "1px solid rgba(229,231,235,0.5)",
+                      boxShadow: "none",
                     }}
                     cursor={{ fill: "#f3f4f6" }}
                   />

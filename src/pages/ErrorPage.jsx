@@ -1,7 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate, useRouteError } from "react-router-dom";
 export default function ErrorPage() {
-  const navigate = useNavigate();
   const error = useRouteError();
   const is404 = error?.status === 404;
   return (
@@ -14,12 +13,13 @@ export default function ErrorPage() {
       <section className="mx-auto flex h-screen w-11/12 max-w-screen-xl flex-col items-center justify-center px-4">
         {" "}
         {is404 ? (
-          <img
-            onClick={() => navigate("/")}
-            className="w-40 cursor-pointer sm:w-48 md:w-56"
-            src="./page-not-found.svg"
-            alt="Page Not Found"
-          />
+          <Link to="/">
+            <img
+              className="w-40 sm:w-48 md:w-56"
+              src="./page-not-found.svg"
+              alt="Page Not Found"
+            />
+          </Link>
         ) : (
           <div className="mb-6 text-6xl text-red-500">⚠️</div>
         )}{" "}
@@ -37,7 +37,7 @@ export default function ErrorPage() {
         </p>{" "}
         <Link
           to="/"
-          className="mt-8 rounded-xl bg-black px-6 py-3 text-sm font-bold text-white transition hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+          className="mt-8 rounded-xl bg-green-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
         >
           {" "}
           Back to Home{" "}

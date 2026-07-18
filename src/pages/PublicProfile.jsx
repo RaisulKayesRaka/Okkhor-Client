@@ -99,7 +99,7 @@ export default function PublicProfile() {
             <button
               onClick={() => toggleFollow()}
               disabled={isFollowPending}
-              className={`mt-4 rounded-full px-6 py-2 text-sm font-semibold transition ${author.isFollowing ? "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600" : "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"}`}
+              className={`mt-4 rounded-full px-6 py-2 text-sm font-semibold transition ${author.isFollowing ? "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600" : "bg-green-600 text-white hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"}`}
             >
               {" "}
               {isFollowPending
