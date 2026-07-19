@@ -168,40 +168,45 @@ export default function Login() {
             <hr className="flex-1 border-gray-200 dark:border-gray-800" />
           </div>
 
-          <div className="mb-4 grid grid-cols-3 gap-3">
-            <button
-              onClick={() => {
-                if (emailRef.current) emailRef.current.value = "raisulkayesofficial@gmail.com";
-                const passwordInput = document.getElementById("password");
-                if (passwordInput) passwordInput.value = "Password@123";
-              }}
-              type="button"
-              className="rounded-full border border-gray-200 bg-white py-2.5 text-xs font-bold text-gray-600 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:bg-transparent dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-            >
-              Demo User
-            </button>
-            <button
-              onClick={() => {
-                if (emailRef.current) emailRef.current.value = "moderator@okkhor.com";
-                const passwordInput = document.getElementById("password");
-                if (passwordInput) passwordInput.value = "Password@123";
-              }}
-              type="button"
-              className="rounded-full border border-gray-200 bg-white py-2.5 text-xs font-bold text-gray-600 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:bg-transparent dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-            >
-              Demo Mod
-            </button>
-            <button
-              onClick={() => {
-                if (emailRef.current) emailRef.current.value = "admin@okkhor.com";
-                const passwordInput = document.getElementById("password");
-                if (passwordInput) passwordInput.value = "Password@123";
-              }}
-              type="button"
-              className="rounded-full border border-gray-200 bg-white py-2.5 text-xs font-bold text-gray-600 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:bg-transparent dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-            >
-              Demo Admin
-            </button>
+          <div className="mb-6 rounded-2xl border border-dashed border-gray-300 bg-gray-50/50 p-4 dark:border-gray-800 dark:bg-gray-900/30">
+            <p className="mb-3 text-center text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+              Test Accounts (Demo)
+            </p>
+            <div className="grid grid-cols-3 gap-3">
+              <button
+                onClick={() => {
+                  if (emailRef.current) emailRef.current.value = "raisulkayesofficial@gmail.com";
+                  const passwordInput = document.getElementById("password");
+                  if (passwordInput) passwordInput.value = "Password@123";
+                }}
+                type="button"
+                className="rounded-full border border-dashed border-gray-300 bg-white py-2 text-xs font-semibold text-gray-500 transition-colors hover:border-gray-400 hover:bg-gray-100 dark:border-gray-700 dark:bg-transparent dark:text-gray-400 dark:hover:border-gray-500 dark:hover:bg-gray-800 dark:hover:text-white"
+              >
+                User
+              </button>
+              <button
+                onClick={() => {
+                  if (emailRef.current) emailRef.current.value = "moderator@okkhor.com";
+                  const passwordInput = document.getElementById("password");
+                  if (passwordInput) passwordInput.value = "Password@123";
+                }}
+                type="button"
+                className="rounded-full border border-dashed border-gray-300 bg-white py-2 text-xs font-semibold text-gray-500 transition-colors hover:border-gray-400 hover:bg-gray-100 dark:border-gray-700 dark:bg-transparent dark:text-gray-400 dark:hover:border-gray-500 dark:hover:bg-gray-800 dark:hover:text-white"
+              >
+                Mod
+              </button>
+              <button
+                onClick={() => {
+                  if (emailRef.current) emailRef.current.value = "admin@okkhor.com";
+                  const passwordInput = document.getElementById("password");
+                  if (passwordInput) passwordInput.value = "Password@123";
+                }}
+                type="button"
+                className="rounded-full border border-dashed border-gray-300 bg-white py-2 text-xs font-semibold text-gray-500 transition-colors hover:border-gray-400 hover:bg-gray-100 dark:border-gray-700 dark:bg-transparent dark:text-gray-400 dark:hover:border-gray-500 dark:hover:bg-gray-800 dark:hover:text-white"
+              >
+                Admin
+              </button>
+            </div>
           </div>
 
           <button

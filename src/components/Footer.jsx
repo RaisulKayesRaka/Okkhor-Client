@@ -93,8 +93,17 @@ export default function Footer() {
 
       {/* Copyright Section */}
       <div className="mx-auto mt-16 flex w-11/12 max-w-screen-xl flex-col items-center justify-between gap-4 border-t border-gray-100 pt-8 dark:border-gray-900 md:flex-row">
-        <p className="text-sm font-medium text-gray-500 dark:text-gray-500">
-          © {new Date().getFullYear()} Okkhor. All rights reserved.
+        <p className="text-center text-sm font-medium text-gray-500 dark:text-gray-500">
+          © {new Date().getFullYear()} Okkhor. All rights reserved. <br className="md:hidden" /> Created by{" "}
+          <a
+            href="https://github.com/RaisulKayesRaka"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-green-600 transition-colors hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
+          >
+            Raisul Kayes Raka
+          </a>
+          .
         </p>
         <div className="flex gap-6 text-sm font-medium text-gray-500 dark:text-gray-500">
           <Link to="/privacy" className="transition-colors hover:text-green-600 dark:hover:text-green-400">Privacy Policy</Link>
