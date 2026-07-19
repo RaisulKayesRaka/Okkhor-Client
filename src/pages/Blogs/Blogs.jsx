@@ -118,7 +118,7 @@ export default function Blogs() {
         {isLoading ? (
           <Loading />
         ) : blogs.length === 0 ? (
-          <div className="flex min-h-[40vh] flex-col items-center justify-center rounded-[2.5rem] border border-gray-200/50 bg-gray-50/50 p-12 text-center dark:border-gray-800 dark:bg-gray-800/20">
+          <div className="flex min-h-[40vh] flex-col items-center justify-center rounded-2xl border border-gray-200/50 bg-gray-50/50 p-12 text-center dark:border-gray-800 dark:bg-gray-800/20">
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
               No blogs found
             </h3>

@@ -14,7 +14,7 @@ export default function About() {
       </div>
       
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-        <div className="rounded-[2.5rem] border border-gray-200/50 bg-white p-10 dark:border-gray-800 dark:bg-gray-900">
+        <div className="rounded-3xl border border-gray-200/50 bg-white p-10 dark:border-gray-800 dark:bg-gray-900">
           <h2 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent dark:from-green-400 dark:to-emerald-300">
             Our Mission
           </h2>
@@ -25,7 +25,7 @@ export default function About() {
           </p>
         </div>
         
-        <div className="rounded-[2.5rem] border border-gray-200/50 bg-white p-10 dark:border-gray-800 dark:bg-gray-900">
+        <div className="rounded-3xl border border-gray-200/50 bg-white p-10 dark:border-gray-800 dark:bg-gray-900">
           <h2 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent dark:from-green-400 dark:to-emerald-300">
             What We Offer
           </h2>
@@ -36,7 +36,7 @@ export default function About() {
           </p>
         </div>
         
-        <div className="rounded-[2.5rem] border border-gray-200/50 bg-white p-10 dark:border-gray-800 dark:bg-gray-900">
+        <div className="rounded-3xl border border-gray-200/50 bg-white p-10 dark:border-gray-800 dark:bg-gray-900">
           <h2 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent dark:from-green-400 dark:to-emerald-300">
             Join Us
           </h2>

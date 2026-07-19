@@ -474,7 +474,7 @@ export default function BlogDetails() {
         </header>
         
         {/* Hero Image */}
-        <div className="mb-12 overflow-hidden rounded-[2.5rem] border border-gray-200/50 shadow-none dark:border-gray-800">
+        <div className="mb-12 overflow-hidden rounded-2xl border border-gray-200/50 shadow-none dark:border-gray-800">
           <img
             className="w-full object-cover"
             src={blog?.blogImage}
@@ -589,7 +589,7 @@ export default function BlogDetails() {
         >
           {" "}
           <div className="flex min-h-full items-center justify-center p-4">
-            <div className="relative w-full max-w-lg rounded-[2.5rem] border border-gray-200/50 bg-white p-10 shadow-2xl dark:border-gray-800 dark:bg-gray-900">
+            <div className="relative w-full max-w-lg rounded-2xl border border-gray-200/50 bg-white p-10 shadow-2xl dark:border-gray-800 dark:bg-gray-900">
               {" "}
               <button
                 onClick={() => {
@@ -624,7 +624,7 @@ export default function BlogDetails() {
                     name="review"
                     rows="4"
                     placeholder="Share your thoughts about this blog..."
-                    className="w-full rounded-[1.5rem] border border-gray-200 bg-gray-50 px-6 py-4 text-sm transition-colors focus:border-green-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-green-500 dark:border-gray-800 dark:bg-gray-950 dark:focus:border-green-500 dark:focus:ring-green-500"
+                    className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-6 py-4 text-sm transition-colors focus:border-green-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-green-500 dark:border-gray-800 dark:bg-gray-950 dark:focus:border-green-500 dark:focus:ring-green-500"
                     required
                   ></textarea>
                 </div>

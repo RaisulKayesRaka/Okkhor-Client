@@ -83,7 +83,7 @@ export default function Register() {
         <title>Register | Okkhor</title>{" "}
       </Helmet>{" "}
       <section className="mx-auto flex min-h-[calc(100vh-80px)] w-11/12 max-w-screen-xl items-center justify-center py-12">
-        <div className="w-full max-w-[450px] rounded-[2.5rem] border border-gray-200/50 bg-white p-8 dark:border-gray-800 dark:bg-gray-900 sm:p-12">
+        <div className="w-full max-w-[450px] rounded-3xl border border-gray-200/50 bg-white p-8 dark:border-gray-800 dark:bg-gray-900 sm:p-12">
           
           <div className="mb-10 text-center">
             <Link to="/">

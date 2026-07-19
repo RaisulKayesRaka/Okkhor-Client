@@ -3,7 +3,7 @@ import { IoArrowForwardOutline, IoCreateOutline, IoHeartOutline, IoChatbubbleOut
 
 export default function Banner() {
   return (
-    <section className="relative mx-auto my-8 w-11/12 max-w-screen-xl overflow-hidden rounded-[2.5rem] bg-gray-50 dark:bg-black border border-gray-200/50 dark:border-gray-800">
+    <section className="relative mx-auto my-8 w-11/12 max-w-screen-xl overflow-hidden rounded-3xl bg-gray-50 dark:bg-black border border-gray-200/50 dark:border-gray-800">
       
       {/* Advanced Animated Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#16a34a1a_1px,transparent_1px),linear-gradient(to_bottom,#16a34a1a_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>

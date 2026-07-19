@@ -86,7 +86,7 @@ const row1 = testimonials.slice(0, 7);
 const row2 = testimonials.slice(7, 13);
 
 const TestimonialCard = ({ testimonial }) => (
-  <div className="flex w-[320px] flex-shrink-0 flex-col justify-between rounded-[1.5rem] border border-gray-100 bg-white p-8 transition-all dark:border-gray-800 dark:bg-black sm:w-[400px] whitespace-normal">
+  <div className="flex w-[320px] flex-shrink-0 flex-col justify-between rounded-2xl border border-gray-100 bg-white p-8 transition-all dark:border-gray-800 dark:bg-black sm:w-[400px] whitespace-normal">
     <div>
       <div className="mb-6 flex items-center gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-green-100 to-emerald-100 text-lg font-bold text-green-700 dark:from-green-900/40 dark:to-emerald-900/40 dark:text-green-400">

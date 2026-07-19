@@ -68,7 +68,7 @@ export default function MyBlogs() {
           subtitle="Manage your blog posts and track their status."
         />{" "}
         {blogs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-[2.5rem] border border-dashed border-gray-200/50 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200/50 bg-gray-50 py-20 dark:border-gray-800 dark:bg-gray-800/50">
             {" "}
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
               {" "}

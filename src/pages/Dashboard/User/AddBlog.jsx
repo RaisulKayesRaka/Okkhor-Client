@@ -144,7 +144,7 @@ export default function AddBlog() {
                       name="blogDescription"
                       id="blogDescription"
                       placeholder="Write your content here..."
-                      className="block min-h-[150px] w-full rounded-[1.5rem] border border-gray-200/50 bg-gray-50 px-5 py-4 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
+                      className="block min-h-[150px] w-full rounded-2xl border border-gray-200/50 bg-gray-50 px-5 py-4 text-sm transition focus:border-black focus:bg-white focus:outline-none focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white"
                       required
                     ></textarea>
                   </div>

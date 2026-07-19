@@ -16,7 +16,7 @@ const Newsletter = () => {
 
   return (
     <section className="mx-auto my-20 w-11/12 max-w-screen-xl">
-      <div className="relative overflow-hidden rounded-[2.5rem] border border-gray-200/50 bg-gradient-to-br from-green-50 via-white to-emerald-50 px-6 py-16 text-center dark:border-gray-800 dark:from-gray-900 dark:via-black dark:to-gray-900 sm:px-16 sm:py-24">
+      <div className="relative overflow-hidden rounded-3xl border border-gray-200/50 bg-gradient-to-br from-green-50 via-white to-emerald-50 px-6 py-16 text-center dark:border-gray-800 dark:from-gray-900 dark:via-black dark:to-gray-900 sm:px-16 sm:py-24">
         
         {/* Decorative Background Elements */}
         <div className="absolute -left-10 -top-10 z-0 text-[20rem] font-black leading-none text-green-500/5 dark:text-gray-800/50">
