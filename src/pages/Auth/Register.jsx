@@ -47,7 +47,11 @@ export default function Register() {
         );
       })
       .catch((error) => {
-        setError(error.code);
+        if (error.code === "auth/email-already-in-use") {
+          setError("This email is already registered. If you used Google to sign in before, please continue with Google or log in with your password.");
+        } else {
+          setError(error.message || error.code);
+        }
       });
   };
   const handleGoogleLogIn = () => {
@@ -69,7 +73,11 @@ export default function Register() {
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
-        setError(error.code);
+        if (error.code === "auth/account-exists-with-different-credential") {
+          setError("An account already exists with this email. Please sign in with your email and password.");
+        } else {
+          setError(error.message || error.code);
+        }
       });
   };
   const toggleShowPassword = () => {

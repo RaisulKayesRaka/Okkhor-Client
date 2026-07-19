@@ -29,7 +29,11 @@ export default function Login() {
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
-        setError(error.code);
+        if (error.code === "auth/account-exists-with-different-credential") {
+          setError("An account already exists with this email. Please sign in with your email and password.");
+        } else {
+          setError(error.message || error.code);
+        }
       });
   };
   const handleGoogleLogIn = () => {
@@ -51,7 +55,11 @@ export default function Login() {
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
-        setError(error.code);
+        if (error.code === "auth/account-exists-with-different-credential") {
+          setError("An account already exists with this email. Please sign in with your email and password.");
+        } else {
+          setError(error.message || error.code);
+        }
       });
   };
   const toggleShowPassword = () => {
