@@ -17,12 +17,14 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
+import useDBUser from "../../hooks/useDBUser";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 export default function BlogDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
+  const { dbUser } = useDBUser();
   const axiosSecure = useAxiosSecure();
   const [editingReview, setEditingReview] = useState(null);
   const [replyingTo, setReplyingTo] = useState(null);
@@ -47,34 +49,34 @@ export default function BlogDetails() {
     },
   });
   const { data: isUpvoted = false, refetch: refetchIsUpvoted } = useQuery({
-    enabled: !loading && !!blog?._id,
-    queryKey: ["isUpvoted", blog?._id, user?.email],
+    enabled: !loading && !!blog?._id && !!dbUser?._id,
+    queryKey: ["isUpvoted", blog?._id, dbUser?._id],
     queryFn: async () => {
-      if (!user?.email) return false;
+      if (!dbUser?._id) return false;
       const { data } = await axiosSecure.get(
-        `/blogs/is-upvoted/${blog?._id}?email=${user?.email}`,
+        `/blogs/is-upvoted/${blog?._id}?userId=${dbUser?._id}`,
       );
       return data;
     },
   });
   const { data: isDownvoted = false, refetch: refetchIsDownvoted } = useQuery({
-    enabled: !loading && !!blog?._id,
-    queryKey: ["isDownvoted", blog?._id, user?.email],
+    enabled: !loading && !!blog?._id && !!dbUser?._id,
+    queryKey: ["isDownvoted", blog?._id, dbUser?._id],
     queryFn: async () => {
-      if (!user?.email) return false;
+      if (!dbUser?._id) return false;
       const { data } = await axiosSecure.get(
-        `/blogs/is-downvoted/${blog?._id}?email=${user?.email}`,
+        `/blogs/is-downvoted/${blog?._id}?userId=${dbUser?._id}`,
       );
       return data;
     },
   });
   const { data: isSaved = false, refetch: refetchIsSaved } = useQuery({
-    enabled: !loading && !!blog?._id,
-    queryKey: ["isSaved", blog?._id, user?.email],
+    enabled: !loading && !!blog?._id && !!dbUser?._id,
+    queryKey: ["isSaved", blog?._id, dbUser?._id],
     queryFn: async () => {
-      if (!user?.email) return false;
+      if (!dbUser?._id) return false;
       const { data } = await axiosSecure.get(
-        `/saved-blogs/check/${blog?._id}?email=${user?.email}`,
+        `/saved-blogs/check/${blog?._id}?userId=${dbUser?._id}`,
       );
       return data?.isSaved;
     },
@@ -126,7 +128,7 @@ export default function BlogDetails() {
     } else {
       const newReview = {
         blogId: id,
-        reviewerEmail: user?.email,
+        reviewerId: dbUser?._id,
         reviewerName: user?.displayName,
         reviewerImage: user?.photoURL,
         review,
@@ -241,7 +243,7 @@ export default function BlogDetails() {
       return navigate("/login");
     }
     const res = await axiosSecure.put(
-      `/blogs/upvote/${blog?._id}?email=${user?.email}`,
+      `/blogs/upvote/${blog?._id}?userId=${dbUser?._id}`,
     );
     if (res?.data?.success) {
       refetchIsUpvoted();
@@ -255,7 +257,7 @@ export default function BlogDetails() {
       return navigate("/login");
     }
     const res = await axiosSecure.put(
-      `/blogs/downvote/${blog?._id}?email=${user?.email}`,
+      `/blogs/downvote/${blog?._id}?userId=${dbUser?._id}`,
     );
     if (res?.data?.success) {
       refetchIsUpvoted();
@@ -270,7 +272,7 @@ export default function BlogDetails() {
     }
     if (isSaved) {
       const res = await axiosSecure.delete(
-        `/saved-blogs/${blog?._id}?email=${user?.email}`,
+        `/saved-blogs/${blog?._id}?userId=${dbUser?._id}`,
       );
       if (res.data.deletedCount > 0) {
         toast.success("Blog removed from saved list");
@@ -278,7 +280,7 @@ export default function BlogDetails() {
       }
     } else {
       const res = await axiosSecure.post("/saved-blogs", {
-        userEmail: user?.email,
+        userId: dbUser?._id,
         blogId: blog?._id,
       });
       if (res.data.insertedId) {
@@ -372,7 +374,7 @@ export default function BlogDetails() {
                   {" "}
                   <FaReply size={12} />{" "}
                 </button>{" "}
-                {user?.email === comment?.reviewerEmail && (
+                {dbUser?._id === comment?.reviewerId && (
                   <>
                     {" "}
                     <button

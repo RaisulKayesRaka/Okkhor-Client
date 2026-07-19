@@ -2,6 +2,7 @@ import { useState } from "react";
 import { WithContext as ReactTags } from "react-tag-input";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useDBUser from "../../../hooks/useDBUser";
 import toast from "react-hot-toast";
 import Loading from "../../../components/Loading";
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +13,7 @@ import DashboardCard from "../../../components/Dashboard/DashboardCard";
 export default function UpdateBlog() {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const { dbUser } = useDBUser();
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const [tags, setTags] = useState([]);
@@ -64,7 +66,7 @@ export default function UpdateBlog() {
     const blogDescription = form.blogDescription.value;
     const ownerName = user?.displayName;
     const ownerImage = user?.photoURL;
-    const ownerEmail = user?.email;
+    const ownerId = dbUser?._id;
     const blogData = {
       blogName,
       blogImage: blogImageUrl,
@@ -72,7 +74,7 @@ export default function UpdateBlog() {
       blogTags: tags,
       ownerName,
       ownerImage,
-      ownerEmail,
+      ownerId,
     };
     try {
       await axiosSecure.put(`/blogs/${id}`, blogData);

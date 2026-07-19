@@ -1,27 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import useDBUser from "../../../hooks/useDBUser";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 import DashboardPageHeader from "../../../components/Dashboard/DashboardPageHeader";
 import DashboardCard from "../../../components/Dashboard/DashboardCard";
 import { BsBookmarkX, BsEye } from "react-icons/bs";
+
 export default function SavedBlogs() {
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useAuth();
+  const { dbUser } = useDBUser();
   const { data: savedBlogs = [], refetch } = useQuery({
-    queryKey: ["savedBlogs", user?.email],
+    queryKey: ["savedBlogs", dbUser?._id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/saved-blogs?email=${user?.email}`);
+      const res = await axiosSecure.get(`/saved-blogs?userId=${dbUser?._id}`);
       return res?.data;
     },
-    enabled: !loading && !!user?.email,
+    enabled: !loading && !!dbUser?._id,
   });
   const handleUnsave = async (id) => {
     try {
       const res = await axiosSecure.delete(
-        `/saved-blogs/${id}?email=${user?.email}`,
+        `/saved-blogs/${id}?userId=${dbUser?._id}`,
       );
       if (res.data.deletedCount > 0) {
         toast.success("Removed from saved blogs");

@@ -95,9 +95,15 @@ export default function PublicProfile() {
             Joined {new Date(author.createdAt).toLocaleDateString()}{" "}
           </p>{" "}
           {/* Follow Button */}{" "}
-          {user && user.email !== author.email && (
+          {(!user || user.email !== author.email) && (
             <button
-              onClick={() => toggleFollow()}
+              onClick={() => {
+                if (!user) {
+                  toast.error("Please log in to follow this author.");
+                  return;
+                }
+                toggleFollow();
+              }}
               disabled={isFollowPending}
               className={`mt-4 rounded-full px-6 py-2 text-sm font-semibold transition ${author.isFollowing ? "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600" : "bg-green-600 text-white hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"}`}
             >
@@ -152,26 +158,24 @@ export default function PublicProfile() {
               {" "}
               Blogs by {author.name}{" "}
             </h2>{" "}
-            <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
-              {" "}
+            <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row items-end pb-1.5">
               <input
                 onChange={(e) => setSearch(e.target.value)}
                 type="text"
                 name="search"
                 placeholder="Search blogs..."
-                className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white sm:w-64"
-              />{" "}
+                className="w-full rounded-full border border-gray-200 bg-white px-6 py-3 text-sm outline-none transition-colors focus:border-green-500 focus:ring-1 focus:ring-green-500 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-green-500 dark:focus:ring-green-500 sm:w-72"
+              />
               <select
                 onChange={(e) => setSort(e.target.value)}
                 name="sort"
                 id="sort"
-                className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-white dark:focus:ring-white sm:w-auto"
+                className="w-full rounded-full border border-gray-200 bg-white px-6 py-3 text-sm outline-none transition-colors focus:border-green-500 focus:ring-1 focus:ring-green-500 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:focus:border-green-500 dark:focus:ring-green-500 sm:w-auto"
               >
-                {" "}
-                <option value="newest">Newest</option>{" "}
-                <option value="oldest">Oldest</option>{" "}
-                <option value="popular">Popular</option>{" "}
-              </select>{" "}
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="popular">Popular</option>
+              </select>
             </div>{" "}
           </div>{" "}
           {blogs.length === 0 ? (

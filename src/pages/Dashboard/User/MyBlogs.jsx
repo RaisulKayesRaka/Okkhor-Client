@@ -1,6 +1,7 @@
 import { MdDelete, MdEdit } from "react-icons/md";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
+import useDBUser from "../../../hooks/useDBUser";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -10,14 +11,15 @@ import DashboardCard from "../../../components/Dashboard/DashboardCard";
 export default function MyBlogs() {
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useAuth();
+  const { dbUser } = useDBUser();
   const navigate = useNavigate();
   const { data: blogs = [], refetch } = useQuery({
-    queryKey: ["myBlogs", user?.email],
+    queryKey: ["myBlogs", dbUser?._id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/all-blogs?email=${user?.email}`);
+      const res = await axiosSecure.get(`/all-blogs?userId=${dbUser?._id}`);
       return res?.data;
     },
-    enabled: !loading && !!user?.email,
+    enabled: !loading && !!dbUser?._id,
   });
   const handleDelete = (id) => {
     const deleteBlog = async () => {

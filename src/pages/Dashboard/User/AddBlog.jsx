@@ -2,6 +2,7 @@ import { useState } from"react";
 import { WithContext as ReactTags } from"react-tag-input";
 import useAuth from"../../../hooks/useAuth";
 import useAxiosSecure from"../../../hooks/useAxiosSecure";
+import useDBUser from"../../../hooks/useDBUser";
 import toast from"react-hot-toast";
 import Loading from"../../../components/Loading";
 import { Helmet } from"react-helmet-async";
@@ -11,6 +12,7 @@ import DashboardCard from"../../../components/Dashboard/DashboardCard";
 export default function AddBlog() {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const { dbUser } = useDBUser();
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -54,7 +56,7 @@ export default function AddBlog() {
     const blogDescription = form.blogDescription.value;
     const ownerName = user?.displayName;
     const ownerImage = user?.photoURL;
-    const ownerEmail = user?.email;
+    const ownerId = dbUser?._id;
     const type ="Normal";
     const status ="Pending";
     const blogData = {
@@ -64,7 +66,7 @@ export default function AddBlog() {
       blogTags: tags,
       ownerName,
       ownerImage,
-      ownerEmail,
+      ownerId,
       type,
       status,
       isReported: false,
