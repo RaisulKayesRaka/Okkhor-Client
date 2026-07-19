@@ -491,77 +491,60 @@ export default function BlogDetails() {
             {blog?.blogDescription}{" "}
           </p>{" "}
         </div>{" "}
-        {/* Action Bar */}{" "}
-        <div className="mb-12 flex flex-wrap items-center justify-between gap-4 border-y border-gray-200 py-4 dark:border-gray-800">
-          {" "}
-          <div className="flex flex-wrap items-center gap-2">
-            {" "}
+        {/* Action Bar */}
+        <div className="mb-12 flex flex-col gap-4 border-y border-gray-100 py-4 dark:border-gray-800 sm:flex-row sm:items-center sm:justify-between">
+          
+          {/* Left: Voting Pill */}
+          <div className="flex items-center self-start rounded-full border border-gray-200 bg-gray-50/50 p-1 dark:border-gray-700 dark:bg-gray-900 sm:self-auto">
             <button
               onClick={handleUpvote}
-              className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all ${isUpvoted ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400" : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"}`}
+              className={`flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold transition-all ${isUpvoted ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400" : "text-gray-600 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-800"}`}
             >
-              {" "}
-              {isUpvoted ? (
-                <BsCaretUpFill size={18} />
-              ) : (
-                <BsCaretUp size={18} />
-              )}{" "}
-              <span>{blog?.upvotes}</span>{" "}
-            </button>{" "}
-            <div className="mx-1 hidden h-6 w-px bg-gray-200 dark:bg-gray-700 sm:block"></div>{" "}
+              {isUpvoted ? <BsCaretUpFill size={18} /> : <BsCaretUp size={18} />}
+              <span>{blog?.upvotes}</span>
+            </button>
+            <div className="mx-1 h-5 w-px bg-gray-300 dark:bg-gray-600"></div>
             <button
               onClick={handleDownvote}
-              className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all ${isDownvoted ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400" : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"}`}
+              className={`flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold transition-all ${isDownvoted ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400" : "text-gray-600 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-800"}`}
             >
-              {" "}
-              {isDownvoted ? (
-                <BsCaretDownFill size={18} />
-              ) : (
-                <BsCaretDown size={18} />
-              )}{" "}
-              <span>{blog?.downvotes}</span>{" "}
-            </button>{" "}
-          </div>{" "}
-          <div className="flex flex-wrap items-center gap-2">
-            {" "}
-            <button
-              onClick={handleToggleSave}
-              className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors ${isSaved ? "bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400" : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"}`}
-            >
-              {" "}
-              {isSaved ? (
-                <BsBookmarkFill size={16} />
-              ) : (
-                <BsBookmark size={16} />
-              )}{" "}
-              <span className="hidden sm:inline">
-                {isSaved ? "Saved" : "Save"}
-              </span>{" "}
-            </button>{" "}
-            <button
-              onClick={handleShare}
-              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
-            >
-              {" "}
-              <BsShare size={16} />{" "}
-              <span className="hidden sm:inline">Share</span>{" "}
-            </button>{" "}
-            <button
-              onClick={() => handleMakeReported(blog?._id)}
-              className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-red-50 hover:text-red-600 dark:text-gray-400 dark:hover:bg-red-900/20 dark:hover:text-red-400"
-            >
-              {" "}
-              <GoReport size={18} />{" "}
-              <span className="hidden sm:inline">Report</span>{" "}
-            </button>{" "}
+              {isDownvoted ? <BsCaretDownFill size={18} /> : <BsCaretDown size={18} />}
+              <span>{blog?.downvotes}</span>
+            </button>
+          </div>
+
+          {/* Right: Actions */}
+          <div className="flex flex-wrap items-center justify-between gap-2 sm:justify-end">
+            <div className="flex flex-wrap items-center gap-1 sm:gap-2">
+              <button
+                onClick={handleToggleSave}
+                className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition-colors ${isSaved ? "bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400" : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"}`}
+              >
+                {isSaved ? <BsBookmarkFill size={16} /> : <BsBookmark size={16} />}
+                <span className="hidden md:inline">{isSaved ? "Saved" : "Save"}</span>
+              </button>
+              <button
+                onClick={handleShare}
+                className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+              >
+                <BsShare size={16} />
+                <span className="hidden md:inline">Share</span>
+              </button>
+              <button
+                onClick={() => handleMakeReported(blog?._id)}
+                className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-red-50 hover:text-red-600 dark:text-gray-400 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+              >
+                <GoReport size={18} />
+                <span className="hidden md:inline">Report</span>
+              </button>
+            </div>
             <button
               onClick={() => openAddModal(null)}
-              className="ml-2 flex items-center gap-2 rounded-full bg-green-600 px-5 py-2 text-sm font-semibold text-white hover:bg-green-700 dark:bg-green-500 dark:text-white dark:hover:bg-green-600"
+              className="ml-auto flex items-center gap-2 rounded-full bg-green-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-green-700 focus:scale-[0.98] dark:bg-green-500 dark:hover:bg-green-600 sm:ml-2"
             >
-              {" "}
-              <FaPen size={14} /> Write Comment{" "}
-            </button>{" "}
-          </div>{" "}
+              <FaPen size={14} /> Write Comment
+            </button>
+          </div>
         </div>{" "}
         {/* Comments Section */}
         <section>
@@ -574,7 +557,7 @@ export default function BlogDetails() {
           <div className="space-y-6">
             {" "}
             {commentTree.length === 0 ? (
-              <div className="rounded-[2rem] border border-dashed border-gray-200/50 bg-gray-50/50 p-12 text-center text-gray-600 dark:border-gray-800 dark:bg-gray-900/50">
+              <div className="rounded-3xl border border-dashed border-gray-200/50 bg-gray-50/50 p-12 text-center text-gray-600 dark:border-gray-800 dark:bg-gray-900/50">
                 No comments yet. Be the first to share your thoughts!
               </div>
             ) : (
